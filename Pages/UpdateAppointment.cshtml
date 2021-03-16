@@ -1,0 +1,32 @@
+﻿@page
+@model WebApplication1ViewAppointments.Pages.UpdateAppointmentModel
+@{
+}
+<label>@Model.Message</label>
+<form method="post">
+    <label asp-for="AppointmentID"></label>
+    <input asp-for="AppointmentID" />
+    <br />
+
+    <label asp-for="Date"></label>
+    <input asp-for="Date" />
+    <br />
+
+    <label asp-for="Time"></label>
+    <input asp-for="Time" />
+    <br />
+
+    <label asp-for="ClientID"></label>
+    <input asp-for="ClientID" />
+    <br />
+
+    <label asp-for="CounsellorID"></label>
+    <input asp-for="CounsellorID" />
+    <br />
+
+    <label asp-for="Notes"></label>
+    <input asp-for="Notes" />
+    <br />
+
+    <input type="submit" value="Update Appointment" />
+</form>

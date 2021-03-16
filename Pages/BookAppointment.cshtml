@@ -1,0 +1,109 @@
+﻿@page
+@model WebApplication1ViewAppointments.Pages.BookAppointmentModel
+@{
+}
+
+<label>@Model.Message</label>
+
+<form method="post">
+    <label asp-for="Date"></label>
+    <input asp-for="Date" />
+    <br />
+
+    <label asp-for="Time"></label>
+    <input asp-for="Time" />
+    <br />
+
+    <!--
+        <select id="ddlTime" asp-for="TimeSelected" asp-items="Model.AvailableTimes"></select>
+    <input asp-for="TimeSelected" name="TimeSelected" />
+    <br />
+    -->
+
+
+    <label asp-for="FirstName"></label>
+    <input asp-for="FirstName" />
+    <br />
+
+    <label asp-for="MiddleName"></label>
+    <input asp-for="MiddleName" />
+    <br />
+
+    <label asp-for="LastName"></label>
+    <input asp-for="LastName" />
+    <br />
+
+    <label asp-for="Phone"></label>
+    <input asp-for="Phone" />
+    <br />
+
+    <label asp-for="Email"></label>
+    <input asp-for="Email" />
+    <br />
+
+    <label asp-for="Address"></label>
+    <input asp-for="Address" />
+    <br />
+
+    <label asp-for="CounsellorName"></label>
+    <input asp-for="CounsellorName" />
+    <br />
+
+    <input type="submit" value="Book Appointment" />
+</form>
+
+<!--
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+        $("body").on("change", "#ddlTime", function () {
+
+            let selectedTime = $("#ddlTime option:selected").val(); //The time currently selected by the ddl
+            console.log("Selected time: " + selectedTime);
+            $("input[name=TimeSelected").val(selectedTime); //Put selected time into hidden field
+
+            //console.log("Changed ddl");
+            //let text = $(this).find("options:selected").text();
+            //console.log(text);
+        });
+</script>
+-->
+
+<!--
+
+
+<form name="SampleForm" method="post">
+    <table>
+        <tr>
+            <td>Date:</td>
+            <td>
+                <input type="text" name="AvaliableTime" value="Model.AvaliableTime" />
+            </td>
+        </tr>
+        <tr>
+            <td>Client name:</td>
+            <td>
+                <input type="text" name="ClientName" value="Model.ClientName" />
+            </td>
+        </tr>
+        <tr>
+            <td>Counsellor name</td>
+            <td>
+                <input type="text" name="CounsellorName" value="Model.CounsellorName" />
+            </td>
+        </tr>
+        <tr>
+            <td>Notes</td>
+            <td>
+                <input type="text" name="Notes" value="Model.Notes" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" name="BookAppointment" value="BookAppointment" />
+            </td>
+        </tr>
+    </table>
+</form>
+    -->

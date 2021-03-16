@@ -1,0 +1,48 @@
+﻿@page
+@model WebApplication1ViewAppointments.Pages.ViewAppointmentsModel
+@{
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+
+
+<table id="table_id" class="display">
+    <thead>
+        <tr>
+            <th>Appointment Date</th>
+            <th>Client ID</th>
+            <th>Counsellor ID</th>
+            <th>Notes</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var i in Model.ListOfAppointments)
+        {
+        <tr>
+            <td>@Html.Raw(i.AppointmentDate)</td>
+            <td>@Html.Raw(i.ClientID)</td>
+            <td>@Html.Raw(i.CounsellorID)</td>
+            <td>@Html.Raw(i.Notes)</td>
+            <td><a class="btn btn-danger" href="DeleteAppointment/@i.AppointmentID">Delete</a></td>
+        </tr>
+        }
+
+
+    </tbody>
+</table>
+
+
+@section Scripts {
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+}
+
+
+
+@*move to the layout page later in case its needed for other pages*@
+
