@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
+using PsychApp.Classes;
 
 namespace PsychApp
 {
@@ -359,6 +360,40 @@ namespace PsychApp
             }
 
             return clientID;
+        }
+        public static List<Client> GetClients()
+        {
+            SqlConnection connection = new SqlConnection();
+            connection.ConnectionString = Util.GetConnectionString();
+            connection.Open();
+
+            string query;
+
+           
+                query = $"SELECT * FROM Clients";
+           // change to stored procedure later
+
+            SqlCommand command = new SqlCommand(query, connection);
+
+            SqlDataReader reader = command.ExecuteReader();
+            List<Client> AllClients = new List<Client>();
+            
+            while (reader.Read())
+            {
+                Client insertItem = new Client();
+               
+                insertItem.FirstName = (string)reader["FirstName"];
+                insertItem.MiddleName = (string)reader["MiddleName"];
+                insertItem.LastName = (string)reader["LastName"];
+                insertItem.Email = (string)reader["Email"];
+                insertItem.Phone = (string)reader["Phone"];
+                insertItem.Address = (string)reader["Address"];
+
+                AllClients.Add(insertItem);
+
+            }
+
+            return AllClients;
         }
         #endregion
 

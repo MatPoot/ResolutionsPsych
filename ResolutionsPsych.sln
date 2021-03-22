@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResolutionsPsych", "ResolutionsPsych.csproj", "{CF7A8985-D3E0-43F6-8225-8F4CF9EB6AC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestProject", "..\XUnitTestProject\XUnitTestProject.csproj", "{521D53F8-44EF-4364-B004-9F90D5C775AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XUnitTestProject", "..\XUnitTestProject\XUnitTestProject.csproj", "{521D53F8-44EF-4364-B004-9F90D5C775AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
