@@ -22,6 +22,19 @@ namespace ResolutionsPsych.Pages
 
         public void OnGet()
         {
+            //string plain = "a";
+            //Random rand = new Random();
+
+            
+            //for(int i = 0; i < 10; ++i)
+            //{
+            //    string hashed = Util.HashPassword(plain);
+            //    System.Diagnostics.Debug.WriteLine($"Plain: {plain} -- Hashed: {hashed}");
+            //    plain += (char)rand.Next(97, 123);
+            //}
+
+            //AddTestLogin();
+
             Username = GetSessionValue("Username");
 
             Classes.Client testClient = new Classes.Client()
@@ -62,6 +75,22 @@ namespace ResolutionsPsych.Pages
                 valueString = string.Empty;
 
             return valueString;
+        }
+
+        private void AddTestLogin()
+        {
+            string password = Util.HashPassword("password");
+
+            //System.Diagnostics.Debug.WriteLine(password);
+
+            Classes.Login login = new Classes.Login()
+            {
+                Username = "username123",
+                Password = password,
+                StaffType = "Counsellor"
+            };
+
+            SqlCode code = SqlHelper.CreateLogin(login);
         }
     }
 }

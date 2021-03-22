@@ -28,7 +28,8 @@ namespace ResolutionsPsych.Pages
 
             Classes.Login login = SqlHelper.GetLogin(Username);
 
-            if (Password == login.Password)
+            bool passwordVerified = Util.Verify(Password, login.Password);
+            if (passwordVerified)
                 authenticated = true;
 
 

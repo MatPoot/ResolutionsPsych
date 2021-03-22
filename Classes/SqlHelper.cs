@@ -219,6 +219,153 @@ namespace ResolutionsPsych
         #endregion
 
         #region Logins
+
+        public static SqlCode CreateLogin(Classes.Login Login)
+        {
+            SqlConnection connection = new SqlConnection();
+            connection.ConnectionString = Util.GetConnectionString();
+            connection.Open();
+
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "CreateLogin";
+
+            SqlParameter parameter = new SqlParameter
+            {
+                ParameterName = "@Username",
+                SqlDbType = SqlDbType.VarChar,
+                Direction = ParameterDirection.Input,
+                SqlValue = Login.Username
+            };
+            command.Parameters.Add(parameter);
+
+            parameter = new SqlParameter
+            {
+                ParameterName = "@Password",
+                SqlDbType = SqlDbType.VarChar,
+                Direction = ParameterDirection.Input,
+                SqlValue = Login.Password
+            };
+            command.Parameters.Add(parameter);
+
+            parameter = new SqlParameter
+            {
+                ParameterName = "@StaffType",
+                SqlDbType = SqlDbType.VarChar,
+                Direction = ParameterDirection.Input,
+                SqlValue = Login.StaffType
+            };
+            command.Parameters.Add(parameter);
+
+            int returnVal;
+            SqlCode code;
+            try
+            {
+                returnVal = command.ExecuteNonQuery();
+                code = SqlCode.Success;
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine($"e: {e.Message}");
+                code = SqlCode.Failure;
+            }
+
+            connection.Close();
+            return code;
+        }
+
+        public static SqlCode UpdateLogin(Classes.Login Login)
+        {
+            SqlConnection connection = new SqlConnection();
+            connection.ConnectionString = Util.GetConnectionString();
+            connection.Open();
+
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "UpdateLogin";
+
+            SqlParameter parameter = new SqlParameter
+            {
+                ParameterName = "@Username",
+                SqlDbType = SqlDbType.VarChar,
+                Direction = ParameterDirection.Input,
+                SqlValue = Login.Username
+            };
+            command.Parameters.Add(parameter);
+
+            parameter = new SqlParameter
+            {
+                ParameterName = "@Password",
+                SqlDbType = SqlDbType.VarChar,
+                Direction = ParameterDirection.Input,
+                SqlValue = Login.Password
+            };
+            command.Parameters.Add(parameter);
+
+            parameter = new SqlParameter
+            {
+                ParameterName = "@StaffType",
+                SqlDbType = SqlDbType.VarChar,
+                Direction = ParameterDirection.Input,
+                SqlValue = Login.StaffType
+            };
+            command.Parameters.Add(parameter);
+
+            int returnVal;
+            SqlCode code;
+            try
+            {
+                returnVal = command.ExecuteNonQuery();
+                code = SqlCode.Success;
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine($"e: {e.Message}");
+                code = SqlCode.Failure;
+            }
+
+            connection.Close();
+            return code;
+        }
+
+        public static SqlCode DeleteLogin(string Username)
+        {
+            SqlConnection connection = new SqlConnection();
+            connection.ConnectionString = Util.GetConnectionString();
+            connection.Open();
+
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "DeleteLogin";
+
+            SqlParameter parameter = new SqlParameter
+            {
+                ParameterName = "@Username",
+                SqlDbType = SqlDbType.VarChar,
+                Direction = ParameterDirection.Input,
+                SqlValue = Username
+            };
+            command.Parameters.Add(parameter);
+
+            int returnVal;
+            SqlCode code;
+            try
+            {
+                returnVal = command.ExecuteNonQuery();
+                code = SqlCode.Success;
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine($"e: {e.Message}");
+                code = SqlCode.Failure;
+            }
+
+            connection.Close();
+            return code;
+        }
         public static Classes.Login GetLogin(string Username)
         {
             SqlConnection connection = new SqlConnection();

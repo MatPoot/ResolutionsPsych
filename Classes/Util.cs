@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using System.Security.Cryptography;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace ResolutionsPsych
 {
@@ -31,6 +33,40 @@ namespace ResolutionsPsych
 
             return connectionString;
         }
+
+        #region Security
+        private static int size = 16;
+
+        public static string HashPassword(string Password)
+        {
+            byte[] salt = GenerateSalt(size);
+            byte[] bytes = KeyDerivation.Pbkdf2(Password, salt, KeyDerivationPrf.HMACSHA1, 10000, size);
+
+            string returnVal = $"{Convert.ToBase64String(salt)}:{Convert.ToBase64String(bytes)}";
+            return returnVal;
+        }
+        public static bool Verify(string PlainPassword, string HashedPassword)
+        {
+            string[] parts = HashedPassword.Split(':');
+            byte[] salt = Convert.FromBase64String(parts[0]);
+            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(PlainPassword, salt, KeyDerivationPrf.HMACSHA1, 10000, size));
+
+            bool matched = parts[1] == hashed;
+
+            return matched;
+        }
+        private static byte[] GenerateSalt(int Length)
+        {
+            byte[] salt = new byte[Length];
+
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(salt);
+            }
+
+            return salt;
+        }
+        #endregion
 
 
     }

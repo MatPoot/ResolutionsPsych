@@ -326,13 +326,13 @@ AS
 	SET @ReturnCode = 1
 
 	IF @Username IS NULL
-		RAISERROR('AddClient - LastName is null', 16, 1)
+		RAISERROR('CreateLogin - Username is null', 16, 1)
 
 	IF @Password IS NULL
-		RAISERROR('AddClient - FirstName is null', 16, 1)
+		RAISERROR('CreateLogin - Password is null', 16, 1)
 
 	IF @StaffType IS NULL
-		RAISERROR('AddClient - Email is null', 16, 1)
+		RAISERROR('CreateLogin - StaffType is null', 16, 1)
 
 	INSERT INTO Logins (Username, [Password], StaffType)
 	VALUES (@Username, @Password, @StaffType)
@@ -381,4 +381,14 @@ AS
 		SET @ReturnCode = 0
 
 	RETURN @ReturnCode
+GO
+
+CREATE PROCEDURE GetLogin
+@Username VARCHAR(40) = NULL
+AS
+	IF @Username IS NULL
+		RAISERROR('GetLogin - Username is null', 16, 1)
+
+	SELECT * FROM Logins
+	WHERE Username = @Username
 GO
