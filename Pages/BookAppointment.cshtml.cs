@@ -11,12 +11,11 @@ namespace PsychApp.Pages
 {
     public class BookAppointmentModel : PageModel
     {
-        [BindProperty]
-        [DataType(DataType.Date)]
+        [BindProperty, DataType(DataType.Date), Required(ErrorMessage = "Date is required")]
         public DateTime Date { get; set; }
 
         [BindProperty]
-        [DataType(DataType.Time)]
+        [DataType(DataType.Time), Required(ErrorMessage = "Time is required")]
         public TimeSpan Time { get; set; }
 
         //public List<SelectListItem> AvailableTimes { get; set; }
@@ -25,13 +24,16 @@ namespace PsychApp.Pages
         public string TimeSelected { get; set; }
 
 
-        [BindProperty]
+        [BindProperty, Required(ErrorMessage = "First name is required"), RegularExpression(@"^[A-Za-z]+$", ErrorMessage = "First name is invalid"),
+            MaxLength(10, ErrorMessage = "First name is too long")]
         public string FirstName { get; set; }
 
-        [BindProperty]
+        [BindProperty, RegularExpression(@"^[A-Za-z]+$", ErrorMessage = "Middle name is invalid"),
+            MaxLength(20, ErrorMessage = "Middle name is too long")]
         public string MiddleName { get; set; }
 
-        [BindProperty]
+        [BindProperty, Required(ErrorMessage = "Last name is required"), RegularExpression(@"^[A-Za-z]+$", ErrorMessage = "Last name is invalid"),
+            MaxLength(20, ErrorMessage = "Last name is too long")]
         public string LastName { get; set; }
 
         [BindProperty]

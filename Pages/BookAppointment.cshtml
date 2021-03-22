@@ -6,13 +6,20 @@
 <label>@Model.Message</label>
 
 <form method="post">
-    <label asp-for="Date"></label>
-    <input asp-for="Date" />
-    <br />
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="Date"></label>
+            <input asp-for="Date" class="form-control" />
+            <span asp-validation-for="Date" class="text-danger"></span>
+        </div>
 
-    <label asp-for="Time"></label>
-    <input asp-for="Time" />
-    <br />
+        <div class="form-group col-md-6">
+            <label asp-for="Time"></label>
+            <input asp-for="Time" class="form-control"/>
+            <span asp-validation-for="Time" class="text-danger"></span>
+        </div>
+
+    </div>
 
     <!--
         <select id="ddlTime" asp-for="TimeSelected" asp-items="Model.AvailableTimes"></select>
@@ -20,34 +27,53 @@
     <br />
     -->
 
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label asp-for="FirstName"></label>
+            <input asp-for="FirstName" class="form-control"/>
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
 
-    <label asp-for="FirstName"></label>
-    <input asp-for="FirstName" />
-    <br />
+        <div class="form-group col-md-4">
+            <label asp-for="MiddleName"></label>
+            <input asp-for="MiddleName" class="form-control"/>
+            <span asp-validation-for="MiddleName" class="text-danger"></span>
+        </div>
 
-    <label asp-for="MiddleName"></label>
-    <input asp-for="MiddleName" />
-    <br />
+        <div class="form-group col-md-4">
+            <label asp-for="LastName"></label>
+            <input asp-for="LastName" class="form-control"/>
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+    </div>
+    
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label asp-for="Phone"></label>
+            <input asp-for="Phone" class="form-control" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
 
-    <label asp-for="LastName"></label>
-    <input asp-for="LastName" />
-    <br />
+        <div class="form-group col-md-4">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
 
-    <label asp-for="Phone"></label>
-    <input asp-for="Phone" />
-    <br />
+        <div class="form-group col-md-4">
+            <label asp-for="Address"></label>
+            <input asp-for="Address" class="form-control" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+    </div>
 
-    <label asp-for="Email"></label>
-    <input asp-for="Email" />
-    <br />
-
-    <label asp-for="Address"></label>
-    <input asp-for="Address" />
-    <br />
-
-    <label asp-for="CounsellorName"></label>
-    <input asp-for="CounsellorName" />
-    <br />
+    <div class="form-row">
+        <div class="form-group">
+            <label asp-for="CounsellorName"></label>
+            <input asp-for="CounsellorName" class="form-control" />
+            <span asp-validation-for="CounsellorName" class="text-danger"></span>
+        </div>
+    </div>
 
     <input type="submit" value="Book Appointment" />
 </form>
@@ -70,40 +96,3 @@
 </script>
 -->
 
-<!--
-
-
-<form name="SampleForm" method="post">
-    <table>
-        <tr>
-            <td>Date:</td>
-            <td>
-                <input type="text" name="AvaliableTime" value="Model.AvaliableTime" />
-            </td>
-        </tr>
-        <tr>
-            <td>Client name:</td>
-            <td>
-                <input type="text" name="ClientName" value="Model.ClientName" />
-            </td>
-        </tr>
-        <tr>
-            <td>Counsellor name</td>
-            <td>
-                <input type="text" name="CounsellorName" value="Model.CounsellorName" />
-            </td>
-        </tr>
-        <tr>
-            <td>Notes</td>
-            <td>
-                <input type="text" name="Notes" value="Model.Notes" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="submit" name="BookAppointment" value="BookAppointment" />
-            </td>
-        </tr>
-    </table>
-</form>
-    -->
