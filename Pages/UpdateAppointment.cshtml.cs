@@ -11,12 +11,10 @@ namespace ResolutionsPsych.Pages
 {
     public class UpdateAppointmentModel : PageModel
     {
-        [BindProperty]
-        [DataType(DataType.Date)]
+        [BindProperty, DataType(DataType.Date), Required(ErrorMessage = "Date is required")]
         public DateTime Date { get; set; }
 
-        [BindProperty]
-        [DataType(DataType.Time)]
+        [BindProperty, DataType(DataType.Time), Required(ErrorMessage = "Time is required")]
         public TimeSpan Time { get; set; }
 
         [BindProperty]
@@ -24,19 +22,22 @@ namespace ResolutionsPsych.Pages
 
         [BindProperty]
         public int AppointmentID { get; set; }
-        [BindProperty]
+
+        [BindProperty, Required(ErrorMessage = "Client ID is required"), RegularExpression(@"^[0-9]+$", ErrorMessage = "Client ID must be a number")]
         public int ClientID { get; set; }
-        [BindProperty]
+
+        [BindProperty, Required(ErrorMessage = "Counsellor ID is required"), RegularExpression(@"^[0-9]+$", ErrorMessage = "Counsellor ID must be a number")]
         public int CounsellorID { get; set; }
+
         [BindProperty]
         public string Notes { get; set; }
+
         public string Message { get; set; }
 
         public void OnGet()
         {
             PopulateFields();
        
-
         }
 
         public IActionResult OnPost()
