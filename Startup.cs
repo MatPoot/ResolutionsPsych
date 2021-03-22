@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PsychApp
+namespace ResolutionsPsych
 {
     public class Startup
     {

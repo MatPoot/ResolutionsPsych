@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
-using PsychApp.Classes;
+using ResolutionsPsych.Classes;
 
-namespace PsychApp
+namespace ResolutionsPsych
 {
     public static class SqlHelper
     {
@@ -75,7 +75,7 @@ namespace PsychApp
             return code;
         }
 
-        public static SqlCode UpdateAppointment(int appointmentid, DateTime appointmentDate,int clientID, int counsellorID, string notes)
+        public static SqlCode UpdateAppointment(Classes.Appointments Appointment)
         {
             SqlConnection connection = new SqlConnection();
             connection.ConnectionString = Util.GetConnectionString();
@@ -91,7 +91,7 @@ namespace PsychApp
                 ParameterName = "@AppointmentID",
                 SqlDbType = SqlDbType.Int,
                 Direction = ParameterDirection.Input,
-                SqlValue = appointmentid
+                SqlValue = Appointment.AppointmentID
             };
             command.Parameters.Add(parameter);
 
@@ -100,7 +100,7 @@ namespace PsychApp
                 ParameterName = "@AppointmentDate",
                 SqlDbType = SqlDbType.DateTime,
                 Direction = ParameterDirection.Input,
-                SqlValue = appointmentDate
+                SqlValue = Appointment.AppointmentDate
              };
             command.Parameters.Add(parameter);
 
@@ -109,7 +109,7 @@ namespace PsychApp
                 ParameterName = "@ClientID",
                 SqlDbType = SqlDbType.Int,
                 Direction = ParameterDirection.Input,
-                SqlValue = clientID
+                SqlValue = Appointment.ClientID
             };
             command.Parameters.Add(parameter);
 
@@ -118,7 +118,7 @@ namespace PsychApp
                 ParameterName = "@CounsellorID",
                 SqlDbType = SqlDbType.Int,
                 Direction = ParameterDirection.Input,
-                SqlValue = counsellorID
+                SqlValue = Appointment.CounsellorID
             };
             command.Parameters.Add(parameter);
 
@@ -127,7 +127,7 @@ namespace PsychApp
                 ParameterName = "@Notes",
                 SqlDbType = SqlDbType.NText,
                 Direction = ParameterDirection.Input,
-                SqlValue = notes
+                SqlValue = Appointment.Notes
             };
             command.Parameters.Add(parameter);
 
@@ -191,9 +191,11 @@ namespace PsychApp
             connection.ConnectionString = Util.GetConnectionString();
             connection.Open();
 
-            string query = $"SELECT * FROM Appointments";
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "GetAppointments";
 
-            SqlCommand command = new SqlCommand(query, connection);
             List<Classes.Appointments> appointments = new List<Classes.Appointments>();
 
             SqlDataReader reader = command.ExecuteReader();
@@ -202,11 +204,11 @@ namespace PsychApp
             {
                 Classes.Appointments newAppt = new Classes.Appointments()
                 {
-                    AppointmentID = int.Parse(reader[0].ToString()),
-                    AppointmentDate = DateTime.Parse(reader[1].ToString()),
-                    ClientID = int.Parse(reader[2].ToString()),
-                    CounsellorID = int.Parse(reader[3].ToString()),
-                    Notes = reader[4].ToString(),
+                    AppointmentID = int.Parse(reader["AppointmentID"].ToString()),
+                    AppointmentDate = DateTime.Parse(reader["AppointmentDate"].ToString()),
+                    ClientID = int.Parse(reader["ClientID"].ToString()),
+                    CounsellorID = int.Parse(reader["CounsellorID"].ToString()),
+                    Notes = reader["Notes"].ToString(),
                 };
 
                 appointments.Add(newAppt);

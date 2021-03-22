@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 
-namespace PsychApp
+namespace ResolutionsPsych
 {
     public static class Util
     {

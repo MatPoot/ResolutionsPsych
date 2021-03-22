@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace PsychApp.Pages
+namespace ResolutionsPsych.Pages
 {
     public class UpdateAppointmentModel : PageModel
     {
@@ -49,9 +49,17 @@ namespace PsychApp.Pages
             //DateTime appointmentDateTime = Date.Add(appointmentTime);
             DateTime appointmentDateTime = Date.Add(Time);
 
-            
 
-            code = SqlHelper.UpdateAppointment(AppointmentID, appointmentDateTime,ClientID,CounsellorID,Notes);
+            Classes.Appointments appointment = new Classes.Appointments()
+            {
+                AppointmentID = AppointmentID,
+                AppointmentDate = appointmentDateTime,
+                ClientID = ClientID,
+                CounsellorID = CounsellorID,
+                Notes = Notes
+            };
+
+            code = SqlHelper.UpdateAppointment(appointment);
 
             if (code == SqlCode.Failure)
             {
