@@ -12,4 +12,13 @@
     <Folder Include="SqlFiles\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\assets\.sass-cache\547dd70afbb823abc27ff9cde551e9769cd0d6a1\style.scssc" />
+    <None Include="wwwroot\assets\.sass-cache\547dd70afbb823abc27ff9cde551e9769cd0d6a1\_variable.scssc" />
+    <None Include="wwwroot\assets\.sass-cache\bba4c5a66a7894a69c91d4bbaeb2427a107f1434\style.scssc" />
+    <None Include="wwwroot\assets\.sass-cache\bba4c5a66a7894a69c91d4bbaeb2427a107f1434\_variable.scssc" />
+    <None Include="wwwroot\assets\scss\.sass-cache\87f88134b2e274406d696eddf2817a21a5f37943\style.scssc" />
+    <None Include="wwwroot\assets\scss\.sass-cache\87f88134b2e274406d696eddf2817a21a5f37943\_variable.scssc" />
+  </ItemGroup>
+
 </Project>
