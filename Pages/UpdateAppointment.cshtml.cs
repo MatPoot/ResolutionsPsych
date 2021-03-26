@@ -51,7 +51,7 @@ namespace ResolutionsPsych.Pages
             DateTime appointmentDateTime = Date.Add(Time);
 
 
-            Classes.Appointments appointment = new Classes.Appointments()
+            Classes.Appointment appointment = new Classes.Appointment()
             {
                 AppointmentID = AppointmentID,
                 AppointmentDate = appointmentDateTime,

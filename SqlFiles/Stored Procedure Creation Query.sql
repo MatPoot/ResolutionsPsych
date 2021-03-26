@@ -1,39 +1,40 @@
+--Appointment
+--Client
+--Counsellor
+--Login
+
+--Create
+--Update
+--Delete
+--Get
+
+
+
+--Stored procedures list:
+--CreateAppointment
+--UpdateAppointment
+--DeleteAppointment
+--GetAppointments
+--GetAppointmentsByClient
+
+--CreateClient
+--UpdateClient
+--DeleteClient
+--GetClients
+--GetClientByID
+--GetClientByName
+
+--CreateCounsellor
+--UpdateCounsellor
+--DeleteCounsellor
+--GetCounsellors
+
+--CreateLogin
+--UpdateLogin
+--DeleteLogin
+--GetLogin
+
 --***DROP PROCEDURES***
-IF EXISTS(
-	SELECT * FROM sys.objects
-	WHERE NAME = 'CreateCounsellor'
-)
-DROP PROCEDURE CreateCounsellor
-
-IF EXISTS(
-	SELECT * FROM sys.objects
-	WHERE NAME = 'UpdateCounsellor'
-)
-DROP PROCEDURE UpdateCounsellor
-
-IF EXISTS(
-	SELECT * FROM sys.objects
-	WHERE NAME = 'DeleteCounsellor'
-)
-DROP PROCEDURE DeleteCounsellor
-
-IF EXISTS(
-	SELECT * FROM sys.objects
-	WHERE NAME = 'CreateClient'
-)
-DROP PROCEDURE CreateClient
-
-IF EXISTS(
-	SELECT * FROM sys.objects
-	WHERE NAME = 'UpdateClient'
-)
-DROP PROCEDURE UpdateClient
-
-IF EXISTS(
-	SELECT * FROM sys.objects
-	WHERE NAME = 'DeleteClient'
-)
-DROP PROCEDURE DeleteClient
 
 IF EXISTS(
 	SELECT * FROM sys.objects
@@ -55,6 +56,79 @@ DROP PROCEDURE DeleteAppointment
 
 IF EXISTS(
 	SELECT * FROM sys.objects
+	WHERE NAME = 'GetAppointments'
+)
+DROP PROCEDURE GetAppointments
+
+IF EXISTS(
+	SELECT * FROM sys.objects
+	WHERE NAME = 'GetAppointmentsByClient'
+)
+DROP PROCEDURE GetAppointmentsByClient
+
+IF EXISTS(
+	SELECT * FROM sys.objects
+	WHERE NAME = 'CreateClient'
+)
+DROP PROCEDURE CreateClient
+
+IF EXISTS(
+	SELECT * FROM sys.objects
+	WHERE NAME = 'UpdateClient'
+)
+DROP PROCEDURE UpdateClient
+
+IF EXISTS(
+	SELECT * FROM sys.objects
+	WHERE NAME = 'DeleteClient'
+)
+DROP PROCEDURE DeleteClient
+
+IF EXISTS(
+	SELECT * FROM sys.objects
+	WHERE NAME = 'GetClients'
+)
+DROP PROCEDURE GetClients
+
+IF EXISTS(
+	SELECT * FROM sys.objects
+	WHERE NAME = 'GetClientByID'
+)
+DROP PROCEDURE GetClientByID
+
+IF EXISTS(
+	SELECT * FROM sys.objects
+	WHERE NAME = 'GetClientByName'
+)
+DROP PROCEDURE GetClientByName
+
+IF EXISTS(
+	SELECT * FROM sys.objects
+	WHERE NAME = 'CreateCounsellor'
+)
+DROP PROCEDURE CreateCounsellor
+
+IF EXISTS(
+	SELECT * FROM sys.objects
+	WHERE NAME = 'UpdateCounsellor'
+)
+DROP PROCEDURE UpdateCounsellor
+
+IF EXISTS(
+	SELECT * FROM sys.objects
+	WHERE NAME = 'DeleteCounsellor'
+)
+DROP PROCEDURE DeleteCounsellor
+
+IF EXISTS(
+	SELECT * FROM sys.objects
+	WHERE NAME = 'GetCounsellors'
+)
+DROP PROCEDURE GetCounsellors
+
+
+IF EXISTS(
+	SELECT * FROM sys.objects
 	WHERE NAME = 'CreateLogin'
 )
 DROP PROCEDURE CreateLogin
@@ -73,24 +147,35 @@ DROP PROCEDURE DeleteLogin
 
 IF EXISTS(
 	SELECT * FROM sys.objects
-	WHERE NAME = 'GetClient'
+	WHERE NAME = 'GetLogin'
 )
-DROP PROCEDURE GetClient
+DROP PROCEDURE GetLogin
 GO
+
 --***END DROP PROCEDURES***
 
 --CREATE PROCEDURES
-CREATE PROCEDURE CreateCounsellor
-@Name VARCHAR(40) = NULL
+
+CREATE PROCEDURE CreateAppointment
+@AppointmentDate DATETIME = NULL,
+@ClientID INT = NULL,
+@CounsellorID INT = NULL,
+@Notes NTEXT = NULL
 AS
-	DECLARE @ReturnCode AS INT
+DECLARE @ReturnCode AS INT
 	SET @ReturnCode = 1
 
-	IF @Name IS NULL
-		RAISERROR('AddCounsellor - Name is null', 16, 1)
+	IF @AppointmentDate IS NULL
+		RAISERROR('BookAppointment - AppointmentDate is null', 16, 1)
 
-	INSERT INTO Counsellors ([Name])
-	VALUES (@Name)
+	IF @ClientID IS NULL
+		RAISERROR('BookAppointment - ClientID is null', 16, 1)
+
+	IF @CounsellorID IS NULL
+		RAISERROR('BookAppointment - CounsellorID is null', 16, 1)
+
+	INSERT INTO Appointments
+	VALUES (@AppointmentDate, @ClientID, @CounsellorID, @Notes)
 	
 	IF @@ERROR = 0
 		SET @ReturnCode = 0
@@ -98,19 +183,25 @@ AS
 	RETURN @ReturnCode
 GO
 
-CREATE PROCEDURE UpdateCounsellor
+CREATE PROCEDURE UpdateAppointment
+@AppointmentID INT = NULL,
+@AppointmentDate DATETIME = NULL,
+@ClientID INT = NULL,
 @CounsellorID INT = NULL,
-@Name VARCHAR(40) = NULL
+@Notes NTEXT = NULL
 AS
 	DECLARE @ReturnCode AS INT
 	SET @ReturnCode = 1
 
-	IF @CounsellorID IS NULL
-		RAISERROR('UpdateCounsellor - CounsellorID is null', 16, 1)
+	IF @AppointmentID IS NULL
+		RAISERROR('UpdateAppointment - AppointmentID is null', 16, 1)
 
-	UPDATE Counsellors
-	SET [Name] = CASE WHEN (@Name IS NULL) THEN [Name] ELSE @Name END
-	WHERE CounsellorID = @CounsellorID
+	UPDATE Appointments
+	SET AppointmentDate = CASE WHEN (@AppointmentDate IS NULL) THEN AppointmentDate ELSE @AppointmentDate END,
+	ClientID = CASE WHEN (@ClientID IS NULL) THEN ClientID ELSE @ClientID END,
+	CounsellorID = CASE WHEN (@CounsellorID IS NULL) THEN CounsellorID ELSE @CounsellorID END,
+	Notes = CASE WHEN (@Notes IS NULL) THEN Notes ELSE @Notes END
+	WHERE AppointmentID = @AppointmentID
 
 	IF @@ERROR = 0
 		SET @ReturnCode = 0
@@ -118,22 +209,35 @@ AS
 	RETURN @ReturnCode
 GO
 
-CREATE PROCEDURE DeleteCounsellor
-@CounsellorID INT = NULL
+CREATE PROCEDURE DeleteAppointment
+@AppointmentID INT = NULL
 AS
 	DECLARE @ReturnCode AS INT
 	SET @ReturnCode = 1
 
-	IF @CounsellorID IS NULL
-		RAISERROR('DeleteCounsellor - CounsellorID is null', 16, 1)
+	IF @AppointmentID IS NULL
+		RAISERROR('DeleteAppointment - AppointmentID is null', 16, 1)
 
-	DELETE FROM Counsellors
-	WHERE CounsellorID = @CounsellorID
+	DELETE FROM Appointments
+	WHERE AppointmentID = @AppointmentID
 
 	IF @@ERROR = 0
 		SET @ReturnCode = 0
 
 	RETURN @ReturnCode
+GO
+
+CREATE PROCEDURE GetAppointments
+AS
+	SELECT * FROM Appointments	
+GO
+
+CREATE PROCEDURE GetAppointmentsByClient
+@ClientID INT = NULL
+AS
+	IF @ClientID IS NULL
+		RAISERROR('GetAppointmentsForClient - ClientID is null', 16, 1)
+	SELECT * FROM Appointments WHERE ClientID = @ClientID
 GO
 
 CREATE PROCEDURE CreateClient
@@ -219,38 +323,56 @@ AS
 	RETURN @ReturnCode
 GO
 
-CREATE PROCEDURE GetClient
-@FirstName VARCHAR(10) = NULL,
-@LastName VARCHAR(20) = NULL
+CREATE PROCEDURE GetClients
 AS
-	DECLARE @ClientID INT
-	select *
-	from Clients
-	where FirstName = @FirstName and LastName = @LastName
-
-	--RETURN @ClientID
+	SELECT * FROM Clients
 GO
 
-CREATE PROCEDURE CreateAppointment
-@AppointmentDate DATETIME = NULL,
-@ClientID INT = NULL,
-@CounsellorID INT = NULL,
-@Notes NTEXT = NULL
+CREATE PROCEDURE GetClientByID
+@ClientID INT = NULL
 AS
-DECLARE @ReturnCode AS INT
+	DECLARE @ReturnCode AS INT
 	SET @ReturnCode = 1
 
-	IF @AppointmentDate IS NULL
-		RAISERROR('BookAppointment - AppointmentDate is null', 16, 1)
-
 	IF @ClientID IS NULL
-		RAISERROR('BookAppointment - ClientID is null', 16, 1)
+		RAISERROR('GetClientByID - ClientID is null', 16, 1)
 
-	IF @CounsellorID IS NULL
-		RAISERROR('BookAppointment - CounsellorID is null', 16, 1)
+	SELECT * FROM Clients
+	WHERE ClientID = @ClientID
+GO
 
-	INSERT INTO Appointments
-	VALUES (@AppointmentDate, @ClientID, @CounsellorID, @Notes)
+CREATE PROCEDURE GetClientByName
+@FirstName VARCHAR(10) = NULL,
+@MiddleName VARCHAR(20) = NULL,
+@LastName VARCHAR(20) = NULL
+AS
+	DECLARE @ReturnCode AS INT
+	SET @ReturnCode = 1
+
+	IF @FirstName IS NULL
+		RAISERROR('GetClientByName - FirstName is null', 16, 1)
+
+	IF @LastName IS NULL
+		RAISERROR('GetClientByName - LastName is null', 16, 1)
+
+	IF @MiddleName IS NULL
+		SELECT * FROM Clients WHERE FirstName = @FirstName AND LastName = @LastName
+	ELSE
+		SELECT * FROM Clients WHERE FirstName = @FirstName AND MiddleName = @MiddleName AND LastName = @LastName
+
+GO
+
+CREATE PROCEDURE CreateCounsellor
+@Name VARCHAR(40) = NULL
+AS
+	DECLARE @ReturnCode AS INT
+	SET @ReturnCode = 1
+
+	IF @Name IS NULL
+		RAISERROR('AddCounsellor - Name is null', 16, 1)
+
+	INSERT INTO Counsellors ([Name])
+	VALUES (@Name)
 	
 	IF @@ERROR = 0
 		SET @ReturnCode = 0
@@ -258,25 +380,19 @@ DECLARE @ReturnCode AS INT
 	RETURN @ReturnCode
 GO
 
-CREATE PROCEDURE UpdateAppointment
-@AppointmentID INT = NULL,
-@AppointmentDate DATETIME = NULL,
-@ClientID INT = NULL,
+CREATE PROCEDURE UpdateCounsellor
 @CounsellorID INT = NULL,
-@Notes NTEXT = NULL
+@Name VARCHAR(40) = NULL
 AS
 	DECLARE @ReturnCode AS INT
 	SET @ReturnCode = 1
 
-	IF @AppointmentID IS NULL
-		RAISERROR('UpdateAppointment - AppointmentID is null', 16, 1)
+	IF @CounsellorID IS NULL
+		RAISERROR('UpdateCounsellor - CounsellorID is null', 16, 1)
 
-	UPDATE Appointments
-	SET AppointmentDate = CASE WHEN (@AppointmentDate IS NULL) THEN AppointmentDate ELSE @AppointmentDate END,
-	ClientID = CASE WHEN (@ClientID IS NULL) THEN ClientID ELSE @ClientID END,
-	CounsellorID = CASE WHEN (@CounsellorID IS NULL) THEN CounsellorID ELSE @CounsellorID END,
-	Notes = CASE WHEN (@Notes IS NULL) THEN Notes ELSE @Notes END
-	WHERE AppointmentID = @AppointmentID
+	UPDATE Counsellors
+	SET [Name] = CASE WHEN (@Name IS NULL) THEN [Name] ELSE @Name END
+	WHERE CounsellorID = @CounsellorID
 
 	IF @@ERROR = 0
 		SET @ReturnCode = 0
@@ -284,17 +400,17 @@ AS
 	RETURN @ReturnCode
 GO
 
-CREATE PROCEDURE DeleteAppointment
-@AppointmentID INT = NULL
+CREATE PROCEDURE DeleteCounsellor
+@CounsellorID INT = NULL
 AS
 	DECLARE @ReturnCode AS INT
 	SET @ReturnCode = 1
 
-	IF @AppointmentID IS NULL
-		RAISERROR('DeleteAppointment - AppointmentID is null', 16, 1)
+	IF @CounsellorID IS NULL
+		RAISERROR('DeleteCounsellor - CounsellorID is null', 16, 1)
 
-	DELETE FROM Appointments
-	WHERE AppointmentID = @AppointmentID
+	DELETE FROM Counsellors
+	WHERE CounsellorID = @CounsellorID
 
 	IF @@ERROR = 0
 		SET @ReturnCode = 0
@@ -302,19 +418,11 @@ AS
 	RETURN @ReturnCode
 GO
 
-CREATE PROCEDURE GetAppointments
-@ClientID INT = NULL
+CREATE PROCEDURE GetCounsellors
 AS
-	SELECT * FROM Appointments	
+	SELECT * FROM Counsellors
 GO
 
-CREATE PROCEDURE GetAppointmentsForClient
-@ClientID INT = NULL
-AS
-	IF @ClientID IS NULL
-		RAISERROR('GetAppointmentsForClient - ClientID is null', 16, 1)
-	SELECT * FROM Appointments WHERE ClientID = @ClientID
-GO
 
 
 CREATE PROCEDURE CreateLogin

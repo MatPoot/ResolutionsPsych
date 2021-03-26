@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ResolutionsPsych.Classes
 {
-    public class Appointments
+    public class Appointment
     {
         //public string ClientName, CounsellorName, Notes;
         public int AppointmentID;

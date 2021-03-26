@@ -9,24 +9,110 @@ namespace ResolutionsPsych
     {
         #region Appointments
 
-        public SqlCode BookAppointment(Classes.Appointments Appointment)
+        public SqlCode BookAppointment(Classes.Appointment Appointment)
         {
-            SqlCode code = SqlHelper.BookSQL(Appointment);
+            SqlClasses.Appointments appHelper = new SqlClasses.Appointments();
+            SqlCode code = appHelper.CreateAppointment(Appointment);
             return code;
         }
 
-        public SqlCode UpdateAppointment(Classes.Appointments Appointment)
+        public SqlCode UpdateAppointment(Classes.Appointment Appointment)
         {
-            SqlCode code = SqlHelper.UpdateAppointment(Appointment);
+            SqlClasses.Appointments appHelper = new SqlClasses.Appointments();
+            SqlCode code = appHelper.UpdateAppointment(Appointment);
             return code;
         }
 
         public SqlCode DeleteAppointment(int AppointmentID)
         {
-            SqlCode code = SqlHelper.DeleteAppoinment(AppointmentID);
+            SqlClasses.Appointments appHelper = new SqlClasses.Appointments();
+            SqlCode code = appHelper.DeleteAppoinment(AppointmentID);
             return code;
         }
 
+        #endregion
+
+        #region Clients
+        public SqlCode CreateClient(Classes.Client Client)
+        {
+            SqlClasses.Clients clientHelper = new SqlClasses.Clients();
+            SqlCode code = clientHelper.CreateClient(Client);
+            return code;
+        }
+
+        public SqlCode DeleteClient(Classes.Client Client)
+        {
+            SqlClasses.Clients clientHelper = new SqlClasses.Clients();
+            SqlCode code = clientHelper.DeleteClient(Client);
+            return code;
+        }
+
+        public Classes.Client GetClient(int ClientID)
+        {
+            SqlClasses.Clients clientHelper = new SqlClasses.Clients();
+            Classes.Client client = clientHelper.GetClientByID(ClientID);
+            return client;
+        }
+
+        public Classes.Client GetClient(string FirstName, string LastName)
+        {
+            SqlClasses.Clients clientHelper = new SqlClasses.Clients();
+            Classes.Client client = clientHelper.GetClientByName(FirstName, null, LastName);
+            return client;
+        }
+
+        public Classes.Client GetClient(string FirstName, string MiddleName, string LastName)
+        {
+            SqlClasses.Clients clientHelper = new SqlClasses.Clients();
+            Classes.Client client = clientHelper.GetClientByName(FirstName, MiddleName, LastName);
+            return client;
+        }
+        #endregion
+
+        #region Counsellors
+        public SqlCode CreateCounsellor(Classes.Counsellor Counsellor)
+        {
+            SqlClasses.Counsellors counsellorHelper = new SqlClasses.Counsellors();
+            SqlCode code = counsellorHelper.CreateCounsellor(Counsellor);
+            return code;
+        }
+
+        public SqlCode UpdateCounsellor(Classes.Counsellor Counsellor)
+        {
+            SqlClasses.Counsellors counsellorHelper = new SqlClasses.Counsellors();
+            SqlCode code = counsellorHelper.UpdateCounsellor(Counsellor);
+            return code;
+        }
+
+        public SqlCode DeleteCounsellor (int CounsellorID)
+        {
+            SqlClasses.Counsellors counsellorHelper = new SqlClasses.Counsellors();
+            SqlCode code = counsellorHelper.DeleteCounsellor(CounsellorID);
+            return code;
+        }
+        #endregion
+
+        #region Logins
+        public SqlCode CreateLogin(Classes.Login Login)
+        {
+            SqlClasses.Logins loginHelper = new SqlClasses.Logins();
+            SqlCode code = loginHelper.CreateLogin(Login);
+            return code;
+        }
+
+        public SqlCode UpdateLogin(Classes.Login Login)
+        {
+            SqlClasses.Logins loginHelper = new SqlClasses.Logins();
+            SqlCode code = loginHelper.UpdateLogin(Login);
+            return code;
+        }
+
+        public SqlCode DeleteLogin(string Username)
+        {
+            SqlClasses.Logins loginHelper = new SqlClasses.Logins();
+            SqlCode code = loginHelper.DeleteLogin(Username);
+            return code;
+        }
         #endregion
     }
 }

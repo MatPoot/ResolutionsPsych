@@ -11,7 +11,7 @@ namespace ResolutionsPsych.Pages
     [BindProperties(SupportsGet =true)]
     public class ViewAppointmentsModel : PageModel
     {
-        public List<Appointments> ListOfAppointments { get; set; }
+        public List<Appointment> ListOfAppointments { get; set; }
        
         public void OnGet()
         {

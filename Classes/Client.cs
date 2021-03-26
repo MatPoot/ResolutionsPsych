@@ -7,6 +7,7 @@ namespace ResolutionsPsych.Classes
 {
     public class Client
     {
+        public int? ClientID;
         public string FirstName;
         public string MiddleName;
         public string LastName;

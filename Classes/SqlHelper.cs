@@ -11,7 +11,7 @@ namespace ResolutionsPsych
     public static class SqlHelper
     {
         #region Appointments
-        public static SqlCode BookSQL(Classes.Appointments Appointment)
+        public static SqlCode BookSQL(Classes.Appointment Appointment)
         {
             SqlConnection connection = new SqlConnection();
             connection.ConnectionString = Util.GetConnectionString();
@@ -75,7 +75,7 @@ namespace ResolutionsPsych
             return code;
         }
 
-        public static SqlCode UpdateAppointment(Classes.Appointments Appointment)
+        public static SqlCode UpdateAppointment(Classes.Appointment Appointment)
         {
             SqlConnection connection = new SqlConnection();
             connection.ConnectionString = Util.GetConnectionString();
@@ -185,7 +185,7 @@ namespace ResolutionsPsych
             return code;
         }
 
-        public static List<Classes.Appointments> GetAppointments()
+        public static List<Classes.Appointment> GetAppointments()
         {
             SqlConnection connection = new SqlConnection();
             connection.ConnectionString = Util.GetConnectionString();
@@ -196,13 +196,13 @@ namespace ResolutionsPsych
             command.CommandType = CommandType.StoredProcedure;
             command.CommandText = "GetAppointments";
 
-            List<Classes.Appointments> appointments = new List<Classes.Appointments>();
+            List<Classes.Appointment> appointments = new List<Classes.Appointment>();
 
             SqlDataReader reader = command.ExecuteReader();
 
             while (reader.Read())
             {
-                Classes.Appointments newAppt = new Classes.Appointments()
+                Classes.Appointment newAppt = new Classes.Appointment()
                 {
                     AppointmentID = int.Parse(reader["AppointmentID"].ToString()),
                     AppointmentDate = DateTime.Parse(reader["AppointmentDate"].ToString()),

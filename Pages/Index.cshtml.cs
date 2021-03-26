@@ -22,6 +22,15 @@ namespace ResolutionsPsych.Pages
 
         public void OnGet()
         {
+            SqlClasses.Clients clientHelper = new SqlClasses.Clients();
+            List<Classes.Client> clients = clientHelper.GetClients();
+
+            foreach(Classes.Client c in clients)
+            {
+                System.Diagnostics.Debug.WriteLine($"ClientID: {c.ClientID}");
+                System.Diagnostics.Debug.WriteLine($"FirstName: {c.FirstName}");
+                System.Diagnostics.Debug.WriteLine($"LastName: {c.LastName}");
+            }
             //string plain = "a";
             //Random rand = new Random();
 
@@ -47,7 +56,7 @@ namespace ResolutionsPsych.Pages
                 Address = "1234 56 Street"
             };
 
-            Classes.Appointments testApp = new Classes.Appointments()
+            Classes.Appointment testApp = new Classes.Appointment()
             {
                 AppointmentDate = new DateTime(2021, 1, 5),
                 ClientID = 1,
