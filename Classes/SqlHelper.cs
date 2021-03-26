@@ -568,6 +568,43 @@ namespace ResolutionsPsych
 
             return counsellorID;
         }
+
+        //for dropdownlist Bookappointment
+        public static List<Classes.Counsellor> GetCounsellors()
+        {
+            SqlConnection connection = new SqlConnection();
+            connection.ConnectionString = Util.GetConnectionString();
+            connection.Open();
+
+           string query = $"SELECT * FROM Counsellors";
+            /*SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "GetCounsellors";*/
+
+            SqlCommand command = new SqlCommand(query, connection);
+            List<Classes.Counsellor> listcounsellor = new List<Classes.Counsellor>();
+
+            SqlDataReader AGetCommandDataReader = command.ExecuteReader();
+
+
+            //Counsellor CurrentCounsellor = new Counsellor();
+            while (AGetCommandDataReader.Read())
+            {
+
+                Classes.Counsellor CurrentCounsellor = new Classes.Counsellor()
+                {
+                    // AGetCommandDataReader.Read();
+                    CounsellorID = (int)AGetCommandDataReader["CounsellorID"],
+                    Name = (string)AGetCommandDataReader["Name"]
+                };
+
+                listcounsellor.Add(CurrentCounsellor);
+            }
+            //AGetCommandDataReader.Close();
+
+            return listcounsellor;
+        }
         #endregion
     }
 }
