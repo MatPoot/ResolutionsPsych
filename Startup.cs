@@ -37,6 +37,7 @@ namespace ResolutionsPsych
             });
 
             services.AddRazorPages();
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,6 +65,8 @@ namespace ResolutionsPsych
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapControllers();
+               
             });
         }
     }
