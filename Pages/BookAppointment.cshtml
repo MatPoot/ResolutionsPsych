@@ -69,9 +69,8 @@
 
     <div class="form-row">
         <div class="form-group">
-            <label asp-for="CounsellorName"></label>
-            <input asp-for="CounsellorName" class="form-control" />
-            <span asp-validation-for="CounsellorName" class="text-danger"></span>
+            <label asp-for="SelectedID">Select A Counsellor</label>
+            <select id="ddlCounsellor" asp-for="SelectedID" asp-items="@Model.SelectCounsellorList"></select>
         </div>
     </div>
 

@@ -6,10 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ResolutionsPsych.Classes;
+using ResolutionsPsych.SqlClasses;
 
 namespace ResolutionsPsych.Pages
 {
     public class BookAppointmentModel : PageModel
+
     {
         [BindProperty, DataType(DataType.Date), Required(ErrorMessage = "Date is required")]
         public DateTime Date { get; set; }
@@ -19,6 +22,8 @@ namespace ResolutionsPsych.Pages
         public TimeSpan Time { get; set; }
 
         //public List<SelectListItem> AvailableTimes { get; set; }
+        [BindProperty]
+        public int SelectedID { get; set; }
 
         [BindProperty]
         public string TimeSelected { get; set; }
@@ -48,16 +53,22 @@ namespace ResolutionsPsych.Pages
             MaxLength(50, ErrorMessage = "Address is too long")]
         public string Address { get; set; }
 
+        [BindProperty]
+        public List<SelectListItem> SelectCounsellorList { get; set; }
+        public List<Counsellor> ListOfCounsellors { get; set; }
         [BindProperty, Required(ErrorMessage = "Counsellor name is required"), RegularExpression(@"^[A-Za-z ]+$", ErrorMessage = "Invalid counsellor name")]
         public string CounsellorName { get; set; }
 
+       
         public string Message { get; set; }
 
         public void OnGet()
         {
             PopulateFields();
             //AvailableTimes = GetAvailableTimes();
+            PopulateSelectList();
 
+            ListOfCounsellors = SqlHelper.GetCounsellors();
         }
 
         public IActionResult OnPost()
@@ -86,13 +97,7 @@ namespace ResolutionsPsych.Pages
 
             //client now exists
             clientID = SqlHelper.GetClient(FirstName, MiddleName, LastName);
-            counsellorID = SqlHelper.GetCounsellor(CounsellorName);
-
-            if (counsellorID == -1)
-            {
-                Message = "That counsellor doesn't exist";
-                return Page();
-            }
+            counsellorID = SelectedID;
 
             System.Diagnostics.Debug.WriteLine($"TimeSelected: {TimeSelected}");
             //TimeSpan appointmentTime = TimeSpan.Parse(TimeSelected);
@@ -123,6 +128,24 @@ namespace ResolutionsPsych.Pages
         }
 
         #region Helper Methods
+
+        private void PopulateSelectList()
+        {
+            // List<Counsellor> counsellor= GetCounsellor();
+            ListOfCounsellors = SqlHelper.GetCounsellors();
+
+            SelectCounsellorList = new List<SelectListItem>();
+
+            foreach (Counsellor p in ListOfCounsellors)
+            {
+                SelectListItem item = new SelectListItem()
+                {
+                    Text = p.Name,
+                    Value = p.CounsellorID.ToString()
+                };
+                SelectCounsellorList.Add(item);
+            }
+        }
         private Classes.Client GetClient()
         {
             Classes.Client newClient = new Classes.Client()
@@ -206,7 +229,7 @@ namespace ResolutionsPsych.Pages
             Address = "1234 56 Street";
             Phone = "(780)-123-4567";
             Email = "abc123@mail.com";
-            CounsellorName = "Mangodude";
+            //CounsellorName = "Mangodude";
         }
 
         #endregion
