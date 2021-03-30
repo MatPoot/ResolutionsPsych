@@ -36,16 +36,19 @@ namespace ResolutionsPsych.Pages
             MaxLength(20, ErrorMessage = "Last name is too long")]
         public string LastName { get; set; }
 
-        [BindProperty]
+        [BindProperty, Required (ErrorMessage = "Phone number is required"), RegularExpression(@"^[\d()\- ]+$", ErrorMessage = "Invalid phone number"),
+            MaxLength(24, ErrorMessage = "Phone number too long")]
         public string Phone { get; set; }
 
-        [BindProperty]
+        [BindProperty, Required(ErrorMessage = "Email is required"), RegularExpression(@"^[^<> ]+@\w+\.[a-z]+$", ErrorMessage = "Invalid email"), 
+            MaxLength(50, ErrorMessage = "Email is too long")]
         public string Email { get; set; }
 
-        [BindProperty]
+        [BindProperty, Required(ErrorMessage = "Address is required"), RegularExpression(@"^[A-Za-z0-9. ]+$", ErrorMessage = "Address is required"),
+            MaxLength(50, ErrorMessage = "Address is too long")]
         public string Address { get; set; }
 
-        [BindProperty]
+        [BindProperty, Required(ErrorMessage = "Counsellor name is required"), RegularExpression(@"^[A-Za-z ]+$", ErrorMessage = "Invalid counsellor name")]
         public string CounsellorName { get; set; }
 
         public string Message { get; set; }
@@ -59,6 +62,9 @@ namespace ResolutionsPsych.Pages
 
         public IActionResult OnPost()
         {
+            if (!ModelState.IsValid)
+                return Page();
+
             int clientID = SqlHelper.GetClient(FirstName, MiddleName, LastName);
             int counsellorID;
 

@@ -532,11 +532,16 @@ namespace ResolutionsPsych
                 Client insertItem = new Client();
                
                 insertItem.FirstName = (string)reader["FirstName"];
-                insertItem.MiddleName = (string)reader["MiddleName"];
+                insertItem.MiddleName = reader["MiddleName"].ToString();
                 insertItem.LastName = (string)reader["LastName"];
                 insertItem.Email = (string)reader["Email"];
                 insertItem.Phone = (string)reader["Phone"];
                 insertItem.Address = (string)reader["Address"];
+
+                //if(reader["MiddleName"].ToString() == null)
+                //{
+
+                //}
 
                 AllClients.Add(insertItem);
 
