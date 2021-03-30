@@ -261,7 +261,7 @@ namespace ResolutionsPsych.SqlClasses
             return client;
         }
 
-        public Classes.Client GetClientByName(string FirstName, string? MiddleName, string LastName)
+        public Classes.Client GetClientByName(string FirstName, string MiddleName, string LastName)
         {
             SqlConnection connection = new SqlConnection();
             connection.ConnectionString = Util.GetConnectionString();
@@ -290,7 +290,7 @@ namespace ResolutionsPsych.SqlClasses
             };
             command.Parameters.Add(parameter);
 
-            if(MiddleName != null)
+            if(MiddleName != string.Empty)
             {
                 parameter = new SqlParameter()
                 {
@@ -303,10 +303,16 @@ namespace ResolutionsPsych.SqlClasses
             }
 
             SqlDataReader reader = command.ExecuteReader();
+            reader.Read();
 
             Classes.Client client = new Classes.Client();
             if (reader.HasRows)
             {
+                System.Diagnostics.Debug.WriteLine($"Reader[0]: {reader[0].ToString()}");
+
+                int clientID = int.Parse(reader["ClientID"].ToString());
+                System.Diagnostics.Debug.WriteLine($"ClientID: {clientID}");
+                System.Diagnostics.Debug.WriteLine($"MiddleName: {MiddleName}");
                 client = new Classes.Client()
                 {
                     ClientID = int.Parse(reader["ClientID"].ToString()),

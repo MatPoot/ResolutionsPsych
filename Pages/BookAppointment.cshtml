@@ -71,6 +71,7 @@
         <div class="form-group">
             <label asp-for="SelectedID">Select A Counsellor</label>
             <select id="ddlCounsellor" asp-for="SelectedID" asp-items="@Model.SelectCounsellorList"></select>
+            <span asp-validation-for="CounsellorName" class="text-danger"></span>
         </div>
     </div>
 

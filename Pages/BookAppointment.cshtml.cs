@@ -33,7 +33,7 @@ namespace ResolutionsPsych.Pages
             MaxLength(10, ErrorMessage = "First name is too long")]
         public string FirstName { get; set; }
 
-        [BindProperty, RegularExpression(@"^[A-Za-z]+$", ErrorMessage = "Middle name is invalid"),
+        [BindProperty, RegularExpression(@"^[A-Za-z]*$", ErrorMessage = "Middle name is invalid"),
             MaxLength(20, ErrorMessage = "Middle name is too long")]
         public string MiddleName { get; set; }
 
@@ -53,11 +53,13 @@ namespace ResolutionsPsych.Pages
             MaxLength(50, ErrorMessage = "Address is too long")]
         public string Address { get; set; }
 
+
+        [BindProperty]
+        public string CounsellorName { get; set; }
+
         [BindProperty]
         public List<SelectListItem> SelectCounsellorList { get; set; }
         public List<Counsellor> ListOfCounsellors { get; set; }
-        [BindProperty, Required(ErrorMessage = "Counsellor name is required"), RegularExpression(@"^[A-Za-z ]+$", ErrorMessage = "Invalid counsellor name")]
-        public string CounsellorName { get; set; }
 
        
         public string Message { get; set; }
@@ -76,15 +78,25 @@ namespace ResolutionsPsych.Pages
             if (!ModelState.IsValid)
                 return Page();
 
-            int clientID = SqlHelper.GetClient(FirstName, MiddleName, LastName);
+            ResolutionsSystem rs = new ResolutionsSystem();
+
+            Classes.Client client = new Client();
+            if (MiddleName == null || MiddleName == "")
+                client = rs.GetClient(FirstName, LastName);
+            else
+                client = rs.GetClient(FirstName, MiddleName, LastName);
+
             int counsellorID;
 
             SqlCode code;
-            if (clientID == -1) //Client doesn't exist
+
+            if (client.ClientID == null)
             {
+                //client doesn't exist
                 System.Diagnostics.Debug.WriteLine("Client doesn't exist");
                 //client doesn't exist, so insert a new client into the database
-                code = SqlHelper.CreateClient(GetClient());
+                //code = SqlHelper.CreateClient(GetClient());
+                code = rs.CreateClient(GetClient());
                 if (code == SqlCode.Failure)
                 {
                     System.Diagnostics.Debug.WriteLine("Failed to create client");
@@ -92,11 +104,41 @@ namespace ResolutionsPsych.Pages
                     Message = "Failed to create client";
                     return Page();
                 }
-
             }
+            else
+                System.Diagnostics.Debug.WriteLine("Client exists");
+
+            //int clientID = (int)client.ClientID;
+
+
+
+            //int counsellorID;
+
+            //SqlCode code;
+            //if (clientID == null || clientID == -1) //Client doesn't exist
+            //{
+            //    System.Diagnostics.Debug.WriteLine("Client doesn't exist");
+            //    //client doesn't exist, so insert a new client into the database
+            //    code = SqlHelper.CreateClient(GetClient());
+            //    if (code == SqlCode.Failure)
+            //    {
+            //        System.Diagnostics.Debug.WriteLine("Failed to create client");
+
+            //        Message = "Failed to create client";
+            //        return Page();
+            //    }
+
+            //}
 
             //client now exists
-            clientID = SqlHelper.GetClient(FirstName, MiddleName, LastName);
+
+            if (MiddleName == null || MiddleName == "")
+                client = rs.GetClient(FirstName, LastName);
+            else
+                client = rs.GetClient(FirstName, MiddleName, LastName);
+
+            //clientID = rs.GetClient(FirstName, MiddleName, LastName);
+            //clientID = SqlHelper.GetClient(FirstName, MiddleName, LastName);
             counsellorID = SelectedID;
 
             System.Diagnostics.Debug.WriteLine($"TimeSelected: {TimeSelected}");
@@ -107,7 +149,7 @@ namespace ResolutionsPsych.Pages
             Classes.Appointment newAppointment = new Classes.Appointment()
             {
                 AppointmentDate = appointmentDateTime,
-                ClientID = clientID,
+                ClientID = (int)client.ClientID,
                 CounsellorID = counsellorID
             };
 
@@ -232,6 +274,10 @@ namespace ResolutionsPsych.Pages
             //CounsellorName = "Mangodude";
         }
 
+        void ClientExists(string FirstName, string MiddleName, string LastName)
+        {
+            
+        }
         #endregion
     }
 }

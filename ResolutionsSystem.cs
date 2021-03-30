@@ -57,7 +57,7 @@ namespace ResolutionsPsych
         public Classes.Client GetClient(string FirstName, string LastName)
         {
             SqlClasses.Clients clientHelper = new SqlClasses.Clients();
-            Classes.Client client = clientHelper.GetClientByName(FirstName, null, LastName);
+            Classes.Client client = clientHelper.GetClientByName(FirstName, string.Empty, LastName);
             return client;
         }
 
