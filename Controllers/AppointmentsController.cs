@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ResolutionsPsych.Classes;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.Encodings.Web;
 
 namespace ResolutionsPsych.Controllers
 {
@@ -192,6 +194,37 @@ namespace ResolutionsPsych.Controllers
 
             connection.Close();
             return code;
+        }
+        public List<Appointment> GetAppointments()
+        {
+            SqlConnection connection = new SqlConnection();
+            connection.ConnectionString = Util.GetConnectionString();
+            connection.Open();
+
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "GetAppointments";
+
+            List<Classes.Appointment> appointments = new List<Classes.Appointment>();
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Classes.Appointment newAppt = new Classes.Appointment()
+                {
+                    AppointmentID = int.Parse(reader["AppointmentID"].ToString()),
+                    AppointmentDate = DateTime.Parse(reader["AppointmentDate"].ToString()),
+                    ClientID = int.Parse(reader["ClientID"].ToString()),
+                    CounsellorID = int.Parse(reader["CounsellorID"].ToString()),
+                    Notes = reader["Notes"].ToString(),
+                };
+
+                appointments.Add(newAppt);
+            }
+
+            return appointments;
         }
 
     }
