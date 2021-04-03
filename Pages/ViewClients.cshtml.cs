@@ -13,10 +13,15 @@ namespace ResolutionsPsych.Pages
     public class ViewClientsModel : PageModel
     {
         public List<Client> ListOfClients { get; set; }
+        public int ClientToModify { get; set; }
         public void OnGet()
         {
             ListOfClients = SqlHelper.GetClients();
         }
-        public 
+        public void OnPost()
+        {
+            //need code here for delete client, need to write SQL methods / command first
+        }
+
     }
 }
