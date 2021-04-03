@@ -18,9 +18,13 @@ namespace ResolutionsPsych.Pages
         {
             ListOfClients = SqlHelper.GetClients();
         }
-        public void OnPost()
+        public IActionResult OnPost()
         {
-            //need code here for delete client, need to write SQL methods / command first
+            //need code here for delete client, need to write SQL stored procedure first
+            //make sure to add a refresh page at the end
+            //SqlCode code = ListOfClients..DeleteClient((int)ClientToModify);
+
+            return new RedirectToPageResult("ViewClients");
         }
 
     }

@@ -184,8 +184,40 @@ namespace ResolutionsPsych.SqlClasses
 
         public SqlCode DeleteClient(Classes.Client Client)
         {
-            //probably don't need this, but here just in case
-            return SqlCode.Failure;
+            SqlConnection connection = new SqlConnection();
+            connection.ConnectionString = Util.GetConnectionString();
+            connection.Open();
+
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "SoftDeleteClient";
+
+            SqlParameter parameter = new SqlParameter
+            {
+                ParameterName = "@ClientID",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Input,
+                SqlValue = (int)Client.ClientID
+            };
+            command.Parameters.Add(parameter);
+
+            
+            int returnVal;
+            SqlCode code;
+            try
+            {
+                returnVal = command.ExecuteNonQuery();
+                code = SqlCode.Success;
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine($"e: {e.Message}");
+                code = SqlCode.Failure;
+            }
+
+            connection.Close();
+            return code;
         }
 
         public List<Classes.Client> GetClients()
