@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ResolutionsPsych.Pages
@@ -23,9 +24,12 @@ namespace ResolutionsPsych.Pages
             _logger = logger;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
             RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
+            Thread.Sleep(150000);
+            return new RedirectToPageResult("Index");
+
         }
     }
 }

@@ -17,5 +17,6 @@ namespace ResolutionsPsych.Pages
         {
             ListOfClients = SqlHelper.GetClients();
         }
+        public 
     }
 }
