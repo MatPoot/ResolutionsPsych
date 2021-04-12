@@ -401,7 +401,34 @@ namespace ResolutionsPsych
         #endregion
 
         #region Clients
+        //dropdownlist for client id in updateappointment.cshtml and cshtml.cs
+        public static List<Classes.Client> GetClientNameList()
+        {
+            SqlConnection connection = new SqlConnection();
+            connection.ConnectionString = Util.GetConnectionString();
+            connection.Open();
 
+            string query = $"SELECT * FROM Clients";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            List<Classes.Client> listClientName = new List<Classes.Client>();
+
+            SqlDataReader AGetCommandDataReader = command.ExecuteReader();
+
+            while (AGetCommandDataReader.Read())
+            {
+
+                Classes.Client CurrentClient = new Classes.Client()
+                {
+                    ClientID = (int)AGetCommandDataReader["ClientID"],
+                    FirstName = (string)AGetCommandDataReader["FirstName"]
+                };
+
+                listClientName.Add(CurrentClient);
+            }
+
+            return listClientName;
+        }
         public static SqlCode CreateClient(Classes.Client Client)
         {
             SqlConnection connection = new SqlConnection();
@@ -574,7 +601,7 @@ namespace ResolutionsPsych
             return counsellorID;
         }
 
-        //for dropdownlist Bookappointment
+        //for dropdownlist Bookappointment and update appointment
         public static List<Classes.Counsellor> GetCounsellors()
         {
             SqlConnection connection = new SqlConnection();
@@ -582,10 +609,6 @@ namespace ResolutionsPsych
             connection.Open();
 
            string query = $"SELECT * FROM Counsellors";
-            /*SqlCommand command = new SqlCommand();
-            command.Connection = connection;
-            command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = "GetCounsellors";*/
 
             SqlCommand command = new SqlCommand(query, connection);
             List<Classes.Counsellor> listcounsellor = new List<Classes.Counsellor>();
@@ -593,13 +616,12 @@ namespace ResolutionsPsych
             SqlDataReader AGetCommandDataReader = command.ExecuteReader();
 
 
-            //Counsellor CurrentCounsellor = new Counsellor();
             while (AGetCommandDataReader.Read())
             {
 
                 Classes.Counsellor CurrentCounsellor = new Classes.Counsellor()
                 {
-                    // AGetCommandDataReader.Read();
+
                     CounsellorID = (int)AGetCommandDataReader["CounsellorID"],
                     Name = (string)AGetCommandDataReader["Name"]
                 };

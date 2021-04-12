@@ -59,6 +59,7 @@ namespace ResolutionsPsych.Pages
 
         [BindProperty]
         public List<SelectListItem> SelectCounsellorList { get; set; }
+        [BindProperty]
         public List<Counsellor> ListOfCounsellors { get; set; }
 
        

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ResolutionsPsych.Classes;
 
 namespace ResolutionsPsych.Pages
 {
@@ -20,43 +21,61 @@ namespace ResolutionsPsych.Pages
         [BindProperty]
         public string TimeSelected { get; set; }
 
-        [BindProperty]
+        [BindProperty, Required(ErrorMessage = "AppointmentID is required")]
         public int AppointmentID { get; set; }
-
-        [BindProperty, Required(ErrorMessage = "Client ID is required"), RegularExpression(@"^[0-9]+$", ErrorMessage = "Client ID must be a number")]
-        public int ClientID { get; set; }
-
-        [BindProperty, Required(ErrorMessage = "Counsellor ID is required"), RegularExpression(@"^[0-9]+$", ErrorMessage = "Counsellor ID must be a number")]
-        public int CounsellorID { get; set; }
 
         [BindProperty]
         public string Notes { get; set; }
-
+        [BindProperty]
+        public int SelectedID { get; set; }
+        [BindProperty]
+        public int SelectedClientID { get; set; }
+        [BindProperty]
+        public string CounsellorName { get; set; }
+        [BindProperty]
+        public string FirstName { get; set; }
+        [BindProperty]
+        public List<SelectListItem> SelectCounsellorList { get; set; }
+        [BindProperty]
+        public List<Counsellor> ListOfCounsellors { get; set; }
+        [BindProperty]
+        public List<SelectListItem> SelectClientList { get; set; }
+        [BindProperty]
+        public List<Client> ListOfClient { get; set; }
         public string Message { get; set; }
 
         public void OnGet()
         {
             PopulateFields();
-       
+
+            //counsellors dropdownlist
+            PopulateSelectList();
+            ListOfCounsellors = SqlHelper.GetCounsellors();
+
+            //client dropdownlist
+            PopulateSelectListForClient();
+            ListOfClient = SqlHelper.GetClientNameList();
+
         }
 
         public IActionResult OnPost()
         {
-           
             SqlCode code;
 
             System.Diagnostics.Debug.WriteLine($"TimeSelected: {TimeSelected}");
-            //TimeSpan appointmentTime = TimeSpan.Parse(TimeSelected);
-            //DateTime appointmentDateTime = Date.Add(appointmentTime);
             DateTime appointmentDateTime = Date.Add(Time);
 
+            int counsellorID;
+            int clientID;
+            counsellorID = SelectedID;
+            clientID = SelectedClientID;
 
             Classes.Appointment appointment = new Classes.Appointment()
             {
                 AppointmentID = AppointmentID,
                 AppointmentDate = appointmentDateTime,
-                ClientID = ClientID,
-                CounsellorID = CounsellorID,
+                ClientID = clientID,
+                CounsellorID = counsellorID,
                 Notes = Notes
             };
 
@@ -65,16 +84,48 @@ namespace ResolutionsPsych.Pages
             if (code == SqlCode.Failure)
             {
                 Message = "Failed to Update appointment";
-                return Page();
+                //return Page();
             }
 
             return new RedirectToPageResult("ViewAppointments");
         }
 
-    
+
         #region Helper Methods
 
+        private void PopulateSelectList()
+        {
+            // List<Counsellor> counsellor= GetCounsellor();
+            ListOfCounsellors = SqlHelper.GetCounsellors();
 
+            SelectCounsellorList = new List<SelectListItem>();
+
+            foreach (Counsellor p in ListOfCounsellors)
+            {
+                SelectListItem item = new SelectListItem()
+                {
+                    Text = p.Name,
+                    Value = p.CounsellorID.ToString()
+                };
+                SelectCounsellorList.Add(item);
+            }
+        }
+        private void PopulateSelectListForClient()
+        {
+            ListOfClient = SqlHelper.GetClientNameList();
+
+            SelectClientList = new List<SelectListItem>();
+
+            foreach (Client p in ListOfClient)
+            {
+                SelectListItem item = new SelectListItem()
+                {
+                    Text = p.FirstName,
+                    Value = p.ClientID.ToString()
+                };
+                SelectClientList.Add(item);
+            }
+        }
         private List<SelectListItem> GetAvailableTimes()
         {
             List<TimeSpan> times = new List<TimeSpan>();
