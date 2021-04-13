@@ -41,27 +41,73 @@
 
             </div>
         </div>
-        <div id="nav-head" class="header-nav">
-            <div class="container">
-                <div class="row">
-                    <a data-toggle="collapse" data-target="#menu" href="#menu"><i class="fas d-block d-md-none small-menu fa-bars"></i></a>
-                    <div id="menu" class="col-lg-14 col-md-14 d-none d-md-block nav-item">
-                        <ul>
-                            <li><a href="Index">Home</a></li>
-                            @*<li><a href="Privacy">Privacy</a></li>*@
-                            <li><a href="BookAppointment">Book Appointment</a></li>
-                            <li><a href="UpdateAppointment">Update Appointment</a></li>
-                            <li><a href="ViewAppointments">View Appointment</a></li>
-                            <li><a href="DeleteAppointment">Delete Appointment</a></li>
-                            <li><a href="AddClient">Add Client</a></li>
-                            <li><a href="ViewClients">View Client</a></li>
-                            @*<li><a href="Login">Login</a></li>*@
-                        </ul>
-                    </div>
-
+        <!--
+    <div id="nav-head" class="header-nav">
+        <div class="container">
+            <div class="row">
+                <a data-toggle="collapse" data-target="#menu" href="#menu"><i class="fas d-block d-md-none small-menu fa-bars"></i></a>
+                <div id="menu" class="col-lg-14 col-md-14 d-none d-md-block nav-item">
+                    <ul>
+                        <li><a href="Index">Home</a></li>
+                        @*<li><a href="Privacy">Privacy</a></li>*@
+                        <li><a href="BookAppointment">Book Appointment</a></li>
+                        <li><a href="UpdateAppointment">Update Appointment</a></li>
+                        <li><a href="ViewAppointments">View Appointment</a></li>
+                        <li><a href="DeleteAppointment">Delete Appointment</a></li>
+                        <li><a href="AddClient">Add Client</a></li>
+                        <li><a href="ViewClients">View Client</a></li>
+                        <li><a href="Login" class="row justify-content-end">Login</a></li>
+                    </ul>
                 </div>
+
             </div>
-        </div>     
+        </div>
+    </div>
+        -->
+
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Resolutions</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="~/Index">Home <span class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="~/BookAppointment">Book Appointment</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="~/UpdateAppointment">Update Appointment</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="~/ViewAppointments">View Appointments</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="~/AddClient">Add Client </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="~/ViewClients">View Clients</a>
+                </li>
+
+
+
+            </ul>
+            <!--<form class="form-inline my-2 my-lg-0">-->
+            <!-- <a id="btnLogin" class="nav-link my-2 my-sm-0" href="Login">Login <span class="sr-only">(current)</span> </a> -->
+            <a id="btnLogin" class="nav-link my-2 my-sm-0" href="~/Login">Login</a>
+
+        </div>
+    </nav>
     </header>
 
     <div class="container">
