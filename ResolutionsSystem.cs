@@ -67,6 +67,14 @@ namespace ResolutionsPsych
             Classes.Client client = clientHelper.GetClientByName(FirstName, MiddleName, LastName);
             return client;
         }
+
+        public List<Classes.Client> GetClients()
+        {
+            SqlClasses.Clients clientHelper = new SqlClasses.Clients();
+            List<Classes.Client> clients = clientHelper.GetClients();
+            return clients;
+        }
+
         #endregion
 
         #region Counsellors

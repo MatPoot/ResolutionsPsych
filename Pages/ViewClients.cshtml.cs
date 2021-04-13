@@ -16,7 +16,8 @@ namespace ResolutionsPsych.Pages
         public int ClientToModify { get; set; }
         public void OnGet()
         {
-            ListOfClients = SqlHelper.GetClients();
+            ResolutionsSystem rs = new ResolutionsSystem();
+            ListOfClients = rs.GetClients();
         }
         public IActionResult OnPost()
         {
@@ -24,6 +25,19 @@ namespace ResolutionsPsych.Pages
             //make sure to add a refresh page at the end
             //SqlCode code = ListOfClients..DeleteClient((int)ClientToModify);
 
+            return new RedirectToPageResult("ViewClients");
+        }
+
+        public IActionResult OnPostDelete(int ClientID)
+        {
+            ResolutionsSystem rs = new ResolutionsSystem();
+            Classes.Client client = new Client()
+            {
+                ClientID = ClientID
+            };
+
+            SqlCode code = rs.DeleteClient(client);
+            System.Diagnostics.Debug.WriteLine($"Deleting client {ClientID}");
             return new RedirectToPageResult("ViewClients");
         }
 

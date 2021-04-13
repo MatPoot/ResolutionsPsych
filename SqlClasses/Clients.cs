@@ -191,7 +191,8 @@ namespace ResolutionsPsych.SqlClasses
             SqlCommand command = new SqlCommand();
             command.Connection = connection;
             command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = "SoftDeleteClient";
+            //command.CommandText = "SoftDeleteClient"; Soft delete = not removed from db?
+            command.CommandText = "DeleteClient";
 
             SqlParameter parameter = new SqlParameter
             {
