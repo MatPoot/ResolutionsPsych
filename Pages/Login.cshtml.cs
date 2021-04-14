@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
 
 namespace ResolutionsPsych.Pages
 {
@@ -12,7 +13,7 @@ namespace ResolutionsPsych.Pages
         [BindProperty]
         public string Username { get; set; }
 
-        [BindProperty]
+        [BindProperty, DataType(DataType.Password)]
         public string Password { get; set; }
         public void OnGet()
         {
@@ -27,6 +28,8 @@ namespace ResolutionsPsych.Pages
             bool authenticated = false;
 
             Classes.Login login = SqlHelper.GetLogin(Username);
+            System.Diagnostics.Debug.WriteLine($"Hash pass: {login.Password}");
+
 
             bool passwordVerified = Util.Verify(Password, login.Password);
             if (passwordVerified)

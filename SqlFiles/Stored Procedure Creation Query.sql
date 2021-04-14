@@ -8,8 +8,6 @@
 --Delete
 --Get
 
-
-
 --Stored procedures list:
 --CreateAppointment
 --UpdateAppointment

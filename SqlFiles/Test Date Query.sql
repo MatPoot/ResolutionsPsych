@@ -11,3 +11,5 @@ select * from Clients
 select * from Appointments
 
 select ClientID from Clients WHERE FirstName = 'James' and MiddleName is null and LastName = 'Dean'
+
+select * from Logins
