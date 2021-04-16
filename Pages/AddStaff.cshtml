@@ -1,0 +1,25 @@
+﻿@page
+@model ResolutionsPsych.Pages.AddStaffModel
+@{
+}
+
+<form action="/" method="post">
+    <label asp-for="Username"></label>
+    <input asp-for="Username" />
+    <br />
+
+    <label asp-for="Password"></label>
+    <input asp-for="Password" />
+    <br />
+
+    <label asp-for="PasswordConfirm"></label>
+    <input asp-for="PasswordConfirm" />
+
+    <label>Counsellor</label>
+    <input asp-for="StaffType" type="radio" value="Counsellor" />
+
+    <label>Counsellor</label>
+    <input asp-for="StaffType" type="radio" value="Secretary" />
+
+    <input type="submit" value="Add Staff" />
+</form>

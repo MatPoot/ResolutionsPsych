@@ -15,11 +15,10 @@ namespace ResolutionsPsych.Pages
 
         [BindProperty, DataType(DataType.Password)]
         public string Password { get; set; }
+
         public void OnGet()
         {
-            System.Diagnostics.Debug.WriteLine("OnGet()");
-            Username = "username123";
-            Password = "password123";
+
         }
 
         public IActionResult OnPost()
