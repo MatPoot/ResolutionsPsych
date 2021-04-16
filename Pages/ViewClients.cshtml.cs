@@ -14,10 +14,16 @@ namespace ResolutionsPsych.Pages
     {
         public List<Client> ListOfClients { get; set; }
         public int ClientToModify { get; set; }
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            string username = GetSessionValue("Username");
+            if (username == null || username == string.Empty)
+                return new RedirectToPageResult("Index");
+
             ResolutionsSystem rs = new ResolutionsSystem();
             ListOfClients = rs.GetClients();
+
+            return Page();
         }
         public IActionResult OnPost()
         {
@@ -39,6 +45,20 @@ namespace ResolutionsPsych.Pages
             SqlCode code = rs.DeleteClient(client);
             System.Diagnostics.Debug.WriteLine($"Deleting client {ClientID}");
             return new RedirectToPageResult("ViewClients");
+        }
+
+        private string GetSessionValue(string Key)
+        {
+            byte[] valueArray;
+            string valueString;
+            HttpContext.Session.TryGetValue(Key, out valueArray);
+
+            if (valueArray != null)
+                valueString = Util.ByteArrayToString(valueArray);
+            else
+                valueString = string.Empty;
+
+            return valueString;
         }
 
     }

@@ -44,8 +44,12 @@ namespace ResolutionsPsych.Pages
         public List<Client> ListOfClient { get; set; }
         public string Message { get; set; }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            string username = GetSessionValue("Username");
+            if (username == null || username == string.Empty)
+                return new RedirectToPageResult("Index");
+
             PopulateFields();
 
             //counsellors dropdownlist
@@ -56,6 +60,7 @@ namespace ResolutionsPsych.Pages
             PopulateSelectListForClient();
             ListOfClient = SqlHelper.GetClientNameList();
 
+            return Page();
         }
 
         public IActionResult OnPost()
@@ -189,6 +194,20 @@ namespace ResolutionsPsych.Pages
             Date = DateTime.Now;
             Time = new TimeSpan(8, 0, 0);
            
+        }
+
+        private string GetSessionValue(string Key)
+        {
+            byte[] valueArray;
+            string valueString;
+            HttpContext.Session.TryGetValue(Key, out valueArray);
+
+            if (valueArray != null)
+                valueString = Util.ByteArrayToString(valueArray);
+            else
+                valueString = string.Empty;
+
+            return valueString;
         }
 
         #endregion
