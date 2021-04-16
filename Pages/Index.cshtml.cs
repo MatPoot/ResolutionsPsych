@@ -22,15 +22,15 @@ namespace ResolutionsPsych.Pages
 
         public void OnGet()
         {
-            SqlClasses.Clients clientHelper = new SqlClasses.Clients();
-            List<Classes.Client> clients = clientHelper.GetClients();
+            //SqlClasses.Clients clientHelper = new SqlClasses.Clients();
+            //List<Classes.Client> clients = clientHelper.GetClients();
 
-            foreach(Classes.Client c in clients)
-            {
-                System.Diagnostics.Debug.WriteLine($"ClientID: {c.ClientID}");
-                System.Diagnostics.Debug.WriteLine($"FirstName: {c.FirstName}");
-                System.Diagnostics.Debug.WriteLine($"LastName: {c.LastName}");
-            }
+            //foreach(Classes.Client c in clients)
+            //{
+            //    System.Diagnostics.Debug.WriteLine($"ClientID: {c.ClientID}");
+            //    System.Diagnostics.Debug.WriteLine($"FirstName: {c.FirstName}");
+            //    System.Diagnostics.Debug.WriteLine($"LastName: {c.LastName}");
+            //}
             //string plain = "a";
             //Random rand = new Random();
 
@@ -44,24 +44,24 @@ namespace ResolutionsPsych.Pages
 
             //AddTestLogin();
 
-            Username = GetSessionValue("Username");
+            //Username = GetSessionValue("Username");
 
-            Classes.Client testClient = new Classes.Client()
-            {
-                FirstName = "Wow",
-                MiddleName = "Me",
-                LastName = "Woah",
-                Email = "abc123@",
-                Phone = "1234",
-                Address = "1234 56 Street"
-            };
+            //Classes.Client testClient = new Classes.Client()
+            //{
+            //    FirstName = "Wow",
+            //    MiddleName = "Me",
+            //    LastName = "Woah",
+            //    Email = "abc123@",
+            //    Phone = "1234",
+            //    Address = "1234 56 Street"
+            //};
 
-            Classes.Appointment testApp = new Classes.Appointment()
-            {
-                AppointmentDate = new DateTime(2021, 1, 5),
-                ClientID = 1,
-                CounsellorID = 1
-            };
+            //Classes.Appointment testApp = new Classes.Appointment()
+            //{
+            //    AppointmentDate = new DateTime(2021, 1, 5),
+            //    ClientID = 1,
+            //    CounsellorID = 1
+            //};
 
 
 
