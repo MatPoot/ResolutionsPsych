@@ -2,11 +2,32 @@
     position: absolute;
     top: 0;
 }
+
 main {
-    min-height:500px; 
-    margin-top:130px;
+    min-height: 500px;
+    margin-top: 130px;
 }
 
 body .slider-detail {
-    padding-top:0;
+    padding-top: 0;
+}
+
+body .key-features .ky-1 {
+  
+    background-color: #49db53;
+}
+
+body .key-features .ky-2 {
+ 
+    background-color: #abf18d;
+}
+
+
+
+body .copy {
+    background-color: #108888;
+}
+
+body .department .single-key {
+    background-color: #abf18d;
 }
