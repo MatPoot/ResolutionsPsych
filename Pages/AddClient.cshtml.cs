@@ -41,7 +41,8 @@ namespace ResolutionsPsych.Pages
             AddClient.Phone = Phone;
             AddClient.Address = Address;
 
-            SqlHelper.CreateClient(AddClient);
+            ResolutionsSystem rs = new ResolutionsSystem();
+            SqlCode code = rs.CreateClient(AddClient);
 
             return new RedirectToPageResult("Index");
         }

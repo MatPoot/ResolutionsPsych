@@ -18,8 +18,10 @@ namespace ResolutionsPsych.Pages
             string username = GetSessionValue("Username");
             if (username == null || username == string.Empty)
                 return new RedirectToPageResult("Index");
-         
-            ListOfAppointments = SqlHelper.GetAppointments();
+
+
+            ResolutionsSystem rs = new ResolutionsSystem();
+            ListOfAppointments = rs.GetAppointments();
 
             return Page();
         }

@@ -26,7 +26,8 @@ namespace ResolutionsPsych.Pages
             System.Diagnostics.Debug.WriteLine("OnPost()");
             bool authenticated = false;
 
-            Classes.Login login = SqlHelper.GetLogin(Username);
+            ResolutionsSystem rs = new ResolutionsSystem();
+            Classes.Login login = rs.GetLogin(Username);
             System.Diagnostics.Debug.WriteLine($"Hash pass: {login.Password}");
 
 

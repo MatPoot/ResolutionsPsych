@@ -65,9 +65,6 @@ namespace ResolutionsPsych.Pages
 
 
 
-            //SqlCode code = SqlHelper.BookSQL(testApp);
-            //SqlCode code = SqlHelper.CreateClient(testClient);
-            //SqlCode code = SqlHelper.DeleteAppoinment(1);
 
             //System.Diagnostics.Debug.WriteLine($"Result: {code}");
         }
@@ -99,7 +96,8 @@ namespace ResolutionsPsych.Pages
                 StaffType = "Counsellor"
             };
 
-            SqlCode code = SqlHelper.CreateLogin(login);
+            ResolutionsSystem rs = new ResolutionsSystem();
+            SqlCode code = rs.CreateLogin(login);
         }
     }
 }
