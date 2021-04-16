@@ -18,22 +18,7 @@ namespace ResolutionsPsych.Pages
             string username = GetSessionValue("Username");
             if (username == null || username == string.Empty)
                 return new RedirectToPageResult("Index");
-            /*
-            for (int i = 0; i < 4; i++)
-            {
-                Appointments testobject = new Appointments();
-                testobject.AppointmentDate = DateTime.Now;
-                testobject.ClientName = "BananaMan";
-                testobject.CounsellorName = "BananaCounsellor";
-                testobject.Notes = "Banana feels like he's going bad";
-
-
-                ListOfAppointments.Add(testobject);
-                
-            }
-            */
-
-            // call SQLhelper and get the list of records
+         
             ListOfAppointments = SqlHelper.GetAppointments();
 
             return Page();
