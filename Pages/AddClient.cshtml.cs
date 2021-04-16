@@ -19,11 +19,20 @@ namespace ResolutionsPsych.Pages
         public string Phone { get; set; }
         public string Address { get; set; }
         public string Message { get; set; }
-        public void OnGet()
+
+
+        #region Request Handlers
+        public IActionResult OnGet()
         {
+            string username = GetSessionValue("Username");
+            if (username == null || username == string.Empty)
+                return new RedirectToPageResult("Index");
+            else
+                return Page();
         }
-       public IActionResult OnPost()
-    {
+
+        public IActionResult OnPost()
+        {
             Client AddClient = new Client();
             AddClient.FirstName = FName;
             AddClient.LastName = LName;
@@ -33,10 +42,27 @@ namespace ResolutionsPsych.Pages
             AddClient.Address = Address;
 
             SqlHelper.CreateClient(AddClient);
-       
 
-        return new RedirectToPageResult("Index");
+            return new RedirectToPageResult("Index");
+        }
+
+        #endregion
+
+        #region Helper Methods
+        private string GetSessionValue(string Key)
+        {
+            byte[] valueArray;
+            string valueString;
+            HttpContext.Session.TryGetValue(Key, out valueArray);
+
+            if (valueArray != null)
+                valueString = Util.ByteArrayToString(valueArray);
+            else
+                valueString = string.Empty;
+
+            return valueString;
+        }
+        #endregion
     }
-    }
-   
+
 }
