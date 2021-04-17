@@ -207,50 +207,57 @@ body{
 }
 /* ===================================== Header CSS ================================== */
 
-header{
+header {
     @include shado-1();
     position: absolute;
     width: 100%;
     z-index: 999;
-    .header-top{
-        background-color: #212121;
-        .left-item{
-            ul{
-                li{
+
+    .header-top {
+        background-color: #108888;
+        .left-item {
+            ul {
+                li {
                     float: left;
                     color: #BCBCBC;
                     padding: 10px;
-                    i{
+
+                    i {
                         color: #4e9be9;
                     }
                 }
             }
         }
-        .right-item{
-            ul{
+
+        .right-item {
+            ul {
                 float: right;
-                li{
+
+                li {
                     float: left;
                     color: #BCBCBC;
                     padding: 10px;
                 }
             }
         }
-        
     }
+
     background-color: #FFF;
-    .header-nav{
-        .nav-item{
-            ul{
-                li{
+
+    .header-nav {
+        .nav-item {
+            ul {
+                li {
                     float: left;
                     font-family: $mouse-500;
                     font-size: 16px;
                     padding: 28px;
-                    @media screen and (max-width: 916px){
+
+                    @media screen and (max-width: 916px) {
                         padding: 30px 18px;
                     }
-                    @media screen and (max-width: 767px){
+
+                    @media screen and (max-width: 767px) {
                         float: none;
                         padding: 14px;
                         border-top: 1px solid #CCC;
@@ -258,22 +265,26 @@ header{
                 }
             }
         }
-        .nav-img{
-            img{
+
+        .nav-img {
+            img {
                 width: 200px;
                 padding: 0px;
                 margin-top: 13px;
-                @media screen and (max-width: 767px){
+
+                @media screen and (max-width: 767px) {
                     margin-top: 0px;
                     padding: 10px;
                 }
             }
         }
-        .appoint{
+
+        .appoint {
             padding-top: 21px;
         }
     }
-    .scroll-to-fixed-fixed{
+
+    .scroll-to-fixed-fixed {
         background-color: #FFF;
         @include shado-1();
     }
