@@ -6,18 +6,37 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ResolutionsPsych;
 using ResolutionsPsych.Classes;
+using System.ComponentModel.DataAnnotations;
 
 namespace ResolutionsPsych.Pages
 {
     [BindProperties]
     public class AddClientModel : PageModel
     {
+        [BindProperty, Required(ErrorMessage = "First name is required"), RegularExpression(@"^[A-Za-z]+$", ErrorMessage = "First name is invalid"),
+            MaxLength(10, ErrorMessage = "First name is too long")]
         public string FName { get; set; }
-        public string LName { get; set; }
+
+        [BindProperty, RegularExpression(@"^[A-Za-z]*$", ErrorMessage = "Middle name is invalid"),
+            MaxLength(20, ErrorMessage = "Middle name is too long")]
         public string MName { get; set; }
+
+        [BindProperty, Required(ErrorMessage = "Last name is required"), RegularExpression(@"^[A-Za-z]+$", ErrorMessage = "Last name is invalid"),
+            MaxLength(20, ErrorMessage = "Last name is too long")]
+        public string LName { get; set; }
+
+        [BindProperty, Required(ErrorMessage = "Email is required"), RegularExpression(@"^[^<> ]+@\w+\.[a-z]+$", ErrorMessage = "Invalid email"),
+            MaxLength(50, ErrorMessage = "Email is too long")]
         public string Email { get; set; }
+
+        [BindProperty, Required(ErrorMessage = "Phone number is required"), RegularExpression(@"^[\d()\- ]+$", ErrorMessage = "Invalid phone number"),
+            MaxLength(24, ErrorMessage = "Phone number too long")]
         public string Phone { get; set; }
+
+        [BindProperty, Required(ErrorMessage = "Address is required"), RegularExpression(@"^[A-Za-z0-9. ]+$", ErrorMessage = "Address is required"),
+            MaxLength(50, ErrorMessage = "Address is too long")]
         public string Address { get; set; }
+
         public string Message { get; set; }
 
 
