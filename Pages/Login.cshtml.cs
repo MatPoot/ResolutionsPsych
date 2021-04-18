@@ -10,10 +10,18 @@ namespace ResolutionsPsych.Pages
 {
     public class LoginModel : PageModel
     {
-        [BindProperty]
+        //Remote validation doesn't seem to work at this time. Leaving it in just in case
+        [PageRemote(
+            ErrorMessage = "Username doesn't exist",
+            AdditionalFields = "__RequestVerificationToken",
+            HttpMethod = "post",
+            PageHandler = "CheckUsername"
+            )]
+        [BindProperty, Required(ErrorMessage = "Username is required"), MaxLength(20, ErrorMessage = "Username must be between 1 and 20 characters")]
         public string Username { get; set; }
 
-        [BindProperty, DataType(DataType.Password)]
+        [BindProperty, Required(ErrorMessage = "Password is required"), DataType(DataType.Password), 
+            MaxLength(20, ErrorMessage = "Password is too long")]
         public string Password { get; set; }
 
         public void OnGet()
@@ -21,8 +29,27 @@ namespace ResolutionsPsych.Pages
 
         }
 
+        public JsonResult OnPostCheckUsername()
+        {
+            System.Diagnostics.Debug.WriteLine("OnPostCheckUsername()");
+
+            ResolutionsSystem rs = new ResolutionsSystem();
+            Classes.Login login = rs.GetLogin(Username);
+
+            bool valid = false;
+            if (login.Username == null)
+                valid = false;
+            else
+                valid = true;
+
+            return new JsonResult(valid);
+        }
+
         public IActionResult OnPost()
         {
+            if (!ModelState.IsValid)
+                return Page();
+            
             System.Diagnostics.Debug.WriteLine("OnPost()");
             bool authenticated = false;
 
@@ -49,7 +76,7 @@ namespace ResolutionsPsych.Pages
                 System.Diagnostics.Debug.WriteLine("Login failed");
                 return Page();
             }
-
+            
 
         }
     }
