@@ -2,3 +2,21 @@
 @model ResolutionsPsych.Pages.UpdateStaffModel
 @{
 }
+<label>@Model.Message</label>
+
+
+
+
+
+<form method="post">
+    <label asp-for="NewUsername">Username</label>
+    <input type="text" asp-for="NewUsername" value="@Html.Raw(Model.ToUpdateStaff.Username)"/>
+    <label asp-for="NewPassword">Password</label>
+    <input asp-for="NewPassword"/> 
+    @*not inlcuding password on purpose ; dont want others to see a password that potentially gets
+    reused by the user elsewhere*@
+    <input type="submit"/>
+
+
+</form>
+
