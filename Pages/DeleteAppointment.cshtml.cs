@@ -22,7 +22,8 @@ namespace ResolutionsPsych.Pages
             if (AppointmentID == null)
                 return new RedirectToPageResult("Index");
 
-            SqlCode code = SqlHelper.DeleteAppoinment((int)AppointmentID);
+            ResolutionsSystem rs = new ResolutionsSystem();
+            SqlCode code = rs.DeleteAppointment((int)AppointmentID);
 
             return new RedirectToPageResult("ViewAppointments");
         }

@@ -179,6 +179,8 @@ namespace ResolutionsPsych.SqlClasses
             SqlDataReader reader = command.ExecuteReader();
 
             Classes.Login login = new Classes.Login();
+
+            reader.Read();
             if (reader.HasRows)
             {
                 login = new Classes.Login()

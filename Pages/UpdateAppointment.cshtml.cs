@@ -54,11 +54,14 @@ namespace ResolutionsPsych.Pages
 
             //counsellors dropdownlist
             PopulateSelectList();
-            ListOfCounsellors = SqlHelper.GetCounsellors();
+
+            ResolutionsSystem rs = new ResolutionsSystem();
+            ListOfCounsellors = rs.GetCounsellors();
 
             //client dropdownlist
             PopulateSelectListForClient();
-            ListOfClient = SqlHelper.GetClientNameList();
+
+            ListOfClient = rs.GetClients();
 
             return Page();
         }
@@ -84,7 +87,8 @@ namespace ResolutionsPsych.Pages
                 Notes = Notes
             };
 
-            code = SqlHelper.UpdateAppointment(appointment);
+            ResolutionsSystem rs = new ResolutionsSystem();
+            code = rs.UpdateAppointment(appointment);
 
             if (code == SqlCode.Failure)
             {
@@ -100,8 +104,8 @@ namespace ResolutionsPsych.Pages
 
         private void PopulateSelectList()
         {
-            // List<Counsellor> counsellor= GetCounsellor();
-            ListOfCounsellors = SqlHelper.GetCounsellors();
+            ResolutionsSystem rs = new ResolutionsSystem();
+            ListOfCounsellors = rs.GetCounsellors();
 
             SelectCounsellorList = new List<SelectListItem>();
 
@@ -117,7 +121,8 @@ namespace ResolutionsPsych.Pages
         }
         private void PopulateSelectListForClient()
         {
-            ListOfClient = SqlHelper.GetClientNameList();
+            ResolutionsSystem rs = new ResolutionsSystem();
+            ListOfClient = rs.GetClients();
 
             SelectClientList = new List<SelectListItem>();
 

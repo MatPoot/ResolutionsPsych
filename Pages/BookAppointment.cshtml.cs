@@ -71,7 +71,8 @@ namespace ResolutionsPsych.Pages
             //AvailableTimes = GetAvailableTimes();
             PopulateSelectList();
 
-            ListOfCounsellors = SqlHelper.GetCounsellors();
+            ResolutionsSystem rs = new ResolutionsSystem();
+            ListOfCounsellors = rs.GetCounsellors();
         }
 
         public IActionResult OnPost()
@@ -96,7 +97,6 @@ namespace ResolutionsPsych.Pages
                 //client doesn't exist
                 System.Diagnostics.Debug.WriteLine("Client doesn't exist");
                 //client doesn't exist, so insert a new client into the database
-                //code = SqlHelper.CreateClient(GetClient());
                 code = rs.CreateClient(GetClient());
                 if (code == SqlCode.Failure)
                 {
@@ -109,27 +109,6 @@ namespace ResolutionsPsych.Pages
             else
                 System.Diagnostics.Debug.WriteLine("Client exists");
 
-            //int clientID = (int)client.ClientID;
-
-
-
-            //int counsellorID;
-
-            //SqlCode code;
-            //if (clientID == null || clientID == -1) //Client doesn't exist
-            //{
-            //    System.Diagnostics.Debug.WriteLine("Client doesn't exist");
-            //    //client doesn't exist, so insert a new client into the database
-            //    code = SqlHelper.CreateClient(GetClient());
-            //    if (code == SqlCode.Failure)
-            //    {
-            //        System.Diagnostics.Debug.WriteLine("Failed to create client");
-
-            //        Message = "Failed to create client";
-            //        return Page();
-            //    }
-
-            //}
 
             //client now exists
 
@@ -138,8 +117,6 @@ namespace ResolutionsPsych.Pages
             else
                 client = rs.GetClient(FirstName, MiddleName, LastName);
 
-            //clientID = rs.GetClient(FirstName, MiddleName, LastName);
-            //clientID = SqlHelper.GetClient(FirstName, MiddleName, LastName);
             counsellorID = SelectedID;
 
             System.Diagnostics.Debug.WriteLine($"TimeSelected: {TimeSelected}");
@@ -154,7 +131,7 @@ namespace ResolutionsPsych.Pages
                 CounsellorID = counsellorID
             };
 
-            code = SqlHelper.BookSQL(newAppointment);
+            code = rs.BookAppointment(newAppointment);
 
             if (code == SqlCode.Failure)
             {
@@ -174,8 +151,8 @@ namespace ResolutionsPsych.Pages
 
         private void PopulateSelectList()
         {
-            // List<Counsellor> counsellor= GetCounsellor();
-            ListOfCounsellors = SqlHelper.GetCounsellors();
+            ResolutionsSystem rs = new ResolutionsSystem();
+            ListOfCounsellors = rs.GetCounsellors();
 
             SelectCounsellorList = new List<SelectListItem>();
 

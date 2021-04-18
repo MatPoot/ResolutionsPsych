@@ -30,6 +30,13 @@ namespace ResolutionsPsych
             return code;
         }
 
+        public List<Classes.Appointment> GetAppointments()
+        {
+            SqlClasses.Appointments appHelper = new SqlClasses.Appointments();
+            List<Classes.Appointment> appointments = appHelper.GetAppointments();
+            return appointments;
+        }
+
         #endregion
 
         #region Clients
@@ -98,6 +105,13 @@ namespace ResolutionsPsych
             SqlCode code = counsellorHelper.DeleteCounsellor(CounsellorID);
             return code;
         }
+
+        public List<Classes.Counsellor> GetCounsellors()
+        {
+            SqlClasses.Counsellors counsellorHelper = new SqlClasses.Counsellors();
+            List<Classes.Counsellor> counsellors = counsellorHelper.GetCounsellors();
+            return counsellors;
+        }
         #endregion
 
         #region Logins
@@ -120,6 +134,13 @@ namespace ResolutionsPsych
             SqlClasses.Logins loginHelper = new SqlClasses.Logins();
             SqlCode code = loginHelper.DeleteLogin(Username);
             return code;
+        }
+
+        public Classes.Login GetLogin(string Username)
+        {
+            SqlClasses.Logins loginHelper = new SqlClasses.Logins();
+            Classes.Login login = loginHelper.GetLogin(Username);
+            return login;
         }
         #endregion
     }
