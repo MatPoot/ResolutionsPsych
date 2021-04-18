@@ -1,0 +1,60 @@
+﻿@page
+@model ResolutionsPsych.Pages.Staff.ViewStaffModel
+@{
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+
+
+<table id="table_id" class="display">
+    <thead>
+        <tr>
+
+            <th>Client ID</th>
+            <th>First Name</th>
+            <th>Middle Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var i in Model.ListOfClients)
+        {
+
+            <tr>
+
+
+                <td>@Html.Raw(i.ClientID)</td>
+                <td>@Html.Raw(i.FirstName)</td>
+                <td>@Html.Raw(i.MiddleName)</td>
+                <td>@Html.Raw(i.LastName)</td>
+                <td>@Html.Raw(i.Email)</td>
+                <td>@Html.Raw(i.Phone)</td>
+                <td>@Html.Raw(i.Address)</td>
+                <td>
+                    <form method="post">
+                        <input value="@Html.Raw(i.ClientID)" asp-for="@Model.ClientToModify" type="hidden" name="ClientID" />
+                        <button asp-page-handler="Delete" class="btn btn-danger"> Delete </button>
+
+                    </form>
+                </td>
+
+            </tr>
+
+        }
+
+
+    </tbody>
+</table>
+
+
+@section Scripts {
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+}

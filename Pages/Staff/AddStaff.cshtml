@@ -2,7 +2,7 @@
 @model ResolutionsPsych.Pages.AddStaffModel
 @{
 }
-
+<label>@Model.Message</label>
 <form action="/" method="post">
     <label asp-for="Username"></label>
     <input asp-for="Username" />
@@ -16,10 +16,31 @@
     <input asp-for="PasswordConfirm" />
 
     <label>Counsellor</label>
-    <input asp-for="StaffType" type="radio" value="Counsellor" />
+    <input asp-for="StaffType" type="radio" value="Counsellor"  id="CounsellorCheck"/>
 
     <label>Counsellor</label>
-    <input asp-for="StaffType" type="radio" value="Secretary" />
+    <input asp-for="StaffType" type="radio" value="Secretary" id="SecretaryCheck" />
+
+    <label asp-for="CounsellorName" hidden id="CounsellorNameLabel"></label>
+    <input asp-for="CounsellorName" hidden  id="CounsellorName"/>
 
     <input type="submit" value="Add Staff" />
 </form>
+
+
+
+@section Scripts {
+
+   
+    <script type="text/javascript">
+        // small script to show/hide the Counsellor Name input based on radiobutton selection
+        function yesnoCheck() {
+            if (document.getElementById('CounsellorCheck').checked) {
+                document.getElementById('CounsellorNameLabel').style.visibility = 'visible';
+                document.getElementById('CounsellorName').style.visibility = 'visible';
+            } else if (document.getElementById('SecretaryCheck').checked) {
+                document.getElementById('CounsellorNameLabel').style.visibility = 'hidden';
+                document.getElementById('CounsellorName').style.visibility = 'hidden';
+            }
+    </script>
+}
