@@ -59,7 +59,7 @@ namespace ResolutionsPsych.Pages
                 {
                     Counsellor AddCounsellor = new Counsellor();
                     AddCounsellor.Name = CounsellorName;
-                    SqlCode code = rs.CreateLogin(AddLogin,AddCounsellor);
+              //      SqlCode code = rs.CreateLogin(AddLogin,AddCounsellor);
                 }
 
 
