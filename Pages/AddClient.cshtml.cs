@@ -52,6 +52,9 @@ namespace ResolutionsPsych.Pages
 
         public IActionResult OnPost()
         {
+            if (!ModelState.IsValid)
+                return Page();
+
             Client AddClient = new Client();
             AddClient.FirstName = FName;
             AddClient.LastName = LName;
