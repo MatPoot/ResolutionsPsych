@@ -30,7 +30,7 @@
 --CreateLogin
 --UpdateLogin
 --DeleteLogin
---GetLogin
+--GetLogins
 
 --***DROP PROCEDURES***
 
@@ -148,6 +148,12 @@ IF EXISTS(
 	WHERE NAME = 'GetLogin'
 )
 DROP PROCEDURE GetLogin
+
+IF EXISTS(
+	SELECT * FROM sys.objects
+	WHERE NAME = 'GetLogin'
+)
+DROP PROCEDURE GetLogins
 GO
 
 --***END DROP PROCEDURES***
@@ -497,4 +503,9 @@ AS
 
 	SELECT * FROM Logins
 	WHERE Username = @Username
+GO
+
+CREATE PROCEDURE GetLogins
+AS
+	SELECT * FROM Logins
 GO

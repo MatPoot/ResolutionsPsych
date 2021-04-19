@@ -24,7 +24,7 @@ namespace ResolutionsPsych.Pages.Staff
 
 
             ResolutionsSystem rs = new ResolutionsSystem();
-            //StaffList = rs.GetLogins();
+            StaffList = rs.GetLogins();
             // need GetAllLogins function and stored procedure
 
             return Page();

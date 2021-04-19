@@ -142,6 +142,13 @@ namespace ResolutionsPsych
             Classes.Login login = loginHelper.GetLogin(Username);
             return login;
         }
+
+        public List<Classes.Login> GetLogins()
+        {
+            SqlClasses.Logins loginHelper = new SqlClasses.Logins();
+            List<Classes.Login> logins = loginHelper.GetLogins();
+            return logins;
+        }
         #endregion
     }
 }

@@ -193,5 +193,36 @@ namespace ResolutionsPsych.SqlClasses
 
             return login;
         }
+
+        public List<Classes.Login> GetLogins()
+        {
+            SqlConnection connection = new SqlConnection();
+            connection.ConnectionString = Util.GetConnectionString();
+            connection.Open();
+
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "GetLogins";
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            List<Classes.Login> logins = new List<Classes.Login>();
+
+            while (reader.Read())
+            {
+                Classes.Login login = new Classes.Login()
+                {
+                    Username = reader["Username"].ToString(),
+                    Password = reader["Password"].ToString(),
+                    StaffType = reader["StaffType"].ToString()
+                };
+
+                logins.Add(login);
+            }
+
+
+            return logins;
+        }
     }
 }

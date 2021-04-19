@@ -186,8 +186,9 @@ header {
   width: 100%;
   z-index: 999;
   background-color: #FFF; }
-  header .header-top {
-    background-color: #212121; }
+    header .header-top {
+        background-color: #108888;
+    }
     header .header-top .left-item ul li {
       float: left;
       color: #BCBCBC;

@@ -1,0 +1,74 @@
+﻿@page
+@model ResolutionsPsych.Pages.AddStaffModel
+@{
+}
+<label>@Model.Message</label>
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Username"></label>
+        <input asp-for="Username" class="form-control" />
+        <span asp-validation-for="Username" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PasswordConfirm"></label>
+        <input asp-for="PasswordConfirm" class="form-control" />
+        <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CounsellorName" id="CounsellorNameLabel"></label>
+        <input asp-for="CounsellorName" id="CounsellorName" class="form-control" />
+        <span asp-validation-for="CounsellorName" class="text-danger"></span>
+    </div>
+
+    <label>Counsellor</label>
+    <input asp-for="StaffType" type="radio" value="Counsellor" id="CounsellorCheck" onchange="yesnoCheck()" checked/>
+
+    <br />
+
+    <label>Secretary</label>
+    <input asp-for="StaffType" type="radio" value="Secretary" id="SecretaryCheck" onchange="yesnoCheck()" />
+
+    <!--
+    <label asp-for="CounsellorName" hidden id="CounsellorNameLabel"></label>
+    <input asp-for="CounsellorName" hidden id="CounsellorName" />
+        -->
+
+
+
+
+    <div class="form-group">
+        <input type="submit" value="Add Staff" class="btn btn-primary" />
+    </div>
+
+</form>
+
+
+
+@section Scripts {
+
+   
+    <script type="text/javascript">
+        // small script to show/hide the Counsellor Name input based on radiobutton selection
+        function yesnoCheck() {
+
+            if (document.getElementById('CounsellorCheck').checked) {
+                console.log("Counsellor checked");
+                document.getElementById('CounsellorNameLabel').style.visibility = 'visible';
+                document.getElementById('CounsellorName').style.visibility = 'visible';
+
+            } else if (document.getElementById('SecretaryCheck').checked) {
+                console.log("Counsellor unchecked");
+                document.getElementById('CounsellorNameLabel').style.visibility = 'hidden';
+                document.getElementById('CounsellorName').style.visibility = 'hidden';
+            }
+        }
+    </script>
+}
