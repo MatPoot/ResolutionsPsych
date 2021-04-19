@@ -23,8 +23,12 @@ namespace ResolutionsPsych.Pages
         public string Message { get; set; }
         public IActionResult OnGet()
         {
-            
 
+            //string username = GetSessionValue("Username");
+            string username = HttpContext.Session.GetString("Username");
+            System.Diagnostics.Debug.WriteLine($"UpdateStaff username: {username}");
+            if (username == null || username == string.Empty)
+                return new RedirectToPageResult("Index");
 
             ResolutionsSystem rs = new ResolutionsSystem();
 
@@ -54,6 +58,19 @@ namespace ResolutionsPsych.Pages
             HttpContext.Session.Set("ToModifyStaffID", Util.StringToByteArray(""));
 
             return Page();
+        }
+        private string GetSessionValue(string Key)
+        {
+            byte[] valueArray;
+            string valueString;
+            HttpContext.Session.TryGetValue(Key, out valueArray);
+
+            if (valueArray != null)
+                valueString = Util.ByteArrayToString(valueArray);
+            else
+                valueString = string.Empty;
+
+            return valueString;
         }
     }
 }
