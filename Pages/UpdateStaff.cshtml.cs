@@ -18,13 +18,13 @@ namespace ResolutionsPsych.Pages
         [Required(ErrorMessage = "name is required"), RegularExpression(@"^[A-Za-z]+$", ErrorMessage = "name is invalid"),
            MaxLength(10, ErrorMessage = "name is too long")]
         public string NewUsername { get; set; }
+
         [Required, DataType(DataType.Password), MinLength(3), MaxLength(10)]
         public string NewPassword { get; set; }
+
         public string Message { get; set; }
         public IActionResult OnGet()
         {
-
-            //string username = GetSessionValue("Username");
             string username = HttpContext.Session.GetString("Username");
             System.Diagnostics.Debug.WriteLine($"UpdateStaff username: {username}");
             if (username == null || username == string.Empty)
@@ -32,12 +32,7 @@ namespace ResolutionsPsych.Pages
 
             ResolutionsSystem rs = new ResolutionsSystem();
 
-            if (HttpContext.Session.GetString("ToModifyStaffID") == "")
-            {
-                return new RedirectToPageResult("Index");
-            }
-
-            ToUpdateStaff = rs.GetLogin(HttpContext.Session.GetString("ToModifyStaffID"));
+            ToUpdateStaff = rs.GetLogin(HttpContext.Session.GetString("Username"));
             NewUsername = ToUpdateStaff.Username;
             NewPassword = ToUpdateStaff.Password;
 
@@ -51,8 +46,9 @@ namespace ResolutionsPsych.Pages
 
             Login UpdatedLogin = new Login();
             UpdatedLogin.Username = NewUsername;
-            UpdatedLogin.Password = NewPassword;
+            UpdatedLogin.Password = Util.HashPassword(NewPassword);
 
+           
             rs.UpdateLogin(UpdatedLogin);
 
             HttpContext.Session.Set("ToModifyStaffID", Util.StringToByteArray(""));
