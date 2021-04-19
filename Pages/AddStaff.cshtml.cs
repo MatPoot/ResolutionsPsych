@@ -16,13 +16,13 @@ namespace ResolutionsPsych.Pages
             MaxLength(10, ErrorMessage = "name is too long")]
         public string Username { get; set; }
 
-        [Required, DataType(DataType.Password), MinLength(3),MaxLength(10)]
+        [Required, DataType(DataType.Password), MinLength(3, ErrorMessage = "Password is too short"), MaxLength(10, ErrorMessage = "Password is too long")]
         public string Password { get; set; }
 
         [Required, DataType(DataType.Password), MinLength(3), MaxLength(10)]
         public string PasswordConfirm { get; set; }
 
-       [Required]
+        [Required]
         public string StaffType { get; set; }
         public string CounsellorName { get; set; }
 
@@ -31,15 +31,26 @@ namespace ResolutionsPsych.Pages
 
         public void OnGet()
         {
-            //System.Diagnostics.Debug.WriteLine("AddStaff OnGet()");
+            System.Diagnostics.Debug.WriteLine("AddStaff OnGet()");
         }
 
         public IActionResult OnPost()
         {
             System.Diagnostics.Debug.WriteLine("OnPost()");
+            System.Diagnostics.Debug.WriteLine($"Username: {Username}");
+            System.Diagnostics.Debug.WriteLine($"Password: {Password}");
+            System.Diagnostics.Debug.WriteLine($"StaffType: {StaffType}");
+
+            //return Page();
 
             if (ModelState.IsValid)
             {
+                if(Password != PasswordConfirm)
+                {
+                    Message = "Passwords do not match";
+                    return Page();
+                }
+
                 ResolutionsSystem rs = new ResolutionsSystem();
 
                 Login AddLogin = new Login();
@@ -50,8 +61,19 @@ namespace ResolutionsPsych.Pages
                 // This one form can do two things, create a login for staff, AND create a counsellor login
                 // below the code checks and creates 1 or 2 objects respectively depending if there is a counsellor being added or not
                 // edit the SQL stored procedure and resolutionspsych to add new counsellor if needed with the createLogin method path
+                SqlCode code = rs.CreateLogin(AddLogin); //create login no matter what
 
+                if(StaffType == "Counsellor")
+                {
+                    //add counsellor
+                    Counsellor newCounsellor = new Counsellor()
+                    {
+                        Name = CounsellorName
+                    };
 
+                    code = rs.CreateCounsellor(newCounsellor);
+                }
+                /*
                 if  (CounsellorName.Length==0){
                
 
@@ -63,14 +85,7 @@ namespace ResolutionsPsych.Pages
                     AddCounsellor.Name = CounsellorName;
               //      SqlCode code = rs.CreateLogin(AddLogin,AddCounsellor);
                 }
-
-
-
-
-
-
-
-
+                */
 
                 Message = "New Staff Added";
 
@@ -79,8 +94,8 @@ namespace ResolutionsPsych.Pages
             }
             else
             {
-            System.Diagnostics.Debug.WriteLine($"StaffType: {StaffType}");
-            return Page();
+                System.Diagnostics.Debug.WriteLine($"StaffType: {StaffType}");
+                return Page();
             }
           
             
