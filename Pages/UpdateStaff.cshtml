@@ -9,13 +9,21 @@
 
 
 <form method="post">
-    <label asp-for="NewUsername">Username</label>
-    <input type="text" asp-for="NewUsername" value="@Html.Raw(Model.ToUpdateStaff.Username)"/>
-    <label asp-for="NewPassword">Password</label>
-    <input asp-for="NewPassword"/> 
+    <div class="form-group">
+        <label asp-for="NewUsername">Username</label>
+        <input type="text" asp-for="NewUsername" value="@Html.Raw(Model.ToUpdateStaff.Username)" class="form-control" />
+        <span asp-validation-for="NewPassword" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NewPassword">Password</label>
+        <input asp-for="NewPassword" />
+        <span asp-validation-for="NewPassword" class="text-danger"></span>
+    </div>
+
     @*not inlcuding password on purpose ; dont want others to see a password that potentially gets
-    reused by the user elsewhere*@
-    <input type="submit"/>
+        reused by the user elsewhere*@
+    <input type="submit" value="Update"/>
 
 
 </form>
