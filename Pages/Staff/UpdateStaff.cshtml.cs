@@ -21,11 +21,24 @@ namespace ResolutionsPsych.Pages
         [Required, DataType(DataType.Password), MinLength(3), MaxLength(10)]
         public string NewPassword { get; set; }
         public string Message { get; set; }
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            ResolutionsSystem rs = new ResolutionsSystem();
             
+
+
+            ResolutionsSystem rs = new ResolutionsSystem();
+
+            if (HttpContext.Session.GetString("ToModifyStaffID") == "")
+            {
+                return new RedirectToPageResult("Index");
+            }
+
             ToUpdateStaff = rs.GetLogin(HttpContext.Session.GetString("ToModifyStaffID"));
+            NewUsername = ToUpdateStaff.Username;
+            NewPassword = ToUpdateStaff.Password;
+
+            return Page();
+           
             
         }
         public IActionResult OnPost()
@@ -37,6 +50,8 @@ namespace ResolutionsPsych.Pages
             UpdatedLogin.Password = NewPassword;
 
             rs.UpdateLogin(UpdatedLogin);
+
+            HttpContext.Session.Set("ToModifyStaffID", Util.StringToByteArray(""));
 
             return Page();
         }
