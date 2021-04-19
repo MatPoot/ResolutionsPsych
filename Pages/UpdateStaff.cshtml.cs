@@ -10,10 +10,13 @@ using ResolutionsPsych.Classes;
 
 namespace ResolutionsPsych.Pages
 {
-    [BindProperties(SupportsGet =true)]
+    //[BindProperties(SupportsGet = true)]
     public class UpdateStaffModel : PageModel
     {
         public Login ToUpdateStaff {get;set;}
+
+        [BindProperty(SupportsGet = true)]
+        public string UsernameToUpdate { get; set; }
 
         [Required(ErrorMessage = "name is required"), RegularExpression(@"^[A-Za-z]+$", ErrorMessage = "name is invalid"),
            MaxLength(10, ErrorMessage = "name is too long")]
@@ -23,18 +26,30 @@ namespace ResolutionsPsych.Pages
         public string NewPassword { get; set; }
 
         public string Message { get; set; }
-        public IActionResult OnGet()
+        public IActionResult OnGet(string editusername)
         {
+            UsernameToUpdate = editusername;
+            System.Diagnostics.Debug.WriteLine("OnGet()");
+
             string username = HttpContext.Session.GetString("Username");
-            System.Diagnostics.Debug.WriteLine($"UpdateStaff username: {username}");
+            //System.Diagnostics.Debug.WriteLine($"UpdateStaff username: {username}");
+
             if (username == null || username == string.Empty)
                 return new RedirectToPageResult("Index");
+
+            //string usernameChange;
+            //if (UsernameToUpdate != null)
+            //    usernameChange = (string)UsernameToUpdate;
+            //else
+            //    return new RedirectToPageResult("Index");
+
+            System.Diagnostics.Debug.WriteLine($"UpdateStaff username: {UsernameToUpdate}");
 
             ResolutionsSystem rs = new ResolutionsSystem();
 
             ToUpdateStaff = rs.GetLogin(HttpContext.Session.GetString("Username"));
-            NewUsername = ToUpdateStaff.Username;
-            NewPassword = ToUpdateStaff.Password;
+            //NewUsername = ToUpdateStaff.Username;
+            //NewPassword = ToUpdateStaff.Password;
 
             return Page();
            
