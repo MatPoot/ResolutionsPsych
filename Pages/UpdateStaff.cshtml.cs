@@ -21,12 +21,20 @@ namespace ResolutionsPsych.Pages
         [Required, DataType(DataType.Password), MinLength(3), MaxLength(10)]
         public string NewPassword { get; set; }
         public string Message { get; set; }
-        public void OnGet()
+
+        public IActionResult OnGet()
         {
+            //string username = GetSessionValue("Username");
+            string username = HttpContext.Session.GetString("Username");
+            System.Diagnostics.Debug.WriteLine($"UpdateStaff username: {username}");
+            if (username == null || username == string.Empty)
+                return new RedirectToPageResult("Index");
+
             ResolutionsSystem rs = new ResolutionsSystem();
             
-            ToUpdateStaff = rs.GetLogin(HttpContext.Session.GetString("ToModifyStaffID"));
-            
+            //ToUpdateStaff = rs.GetLogin(HttpContext.Session.GetString("ToModifyStaffID"));
+
+            return Page();
         }
         public IActionResult OnPost()
         {
@@ -39,6 +47,20 @@ namespace ResolutionsPsych.Pages
             rs.UpdateLogin(UpdatedLogin);
 
             return Page();
+        }
+
+        private string GetSessionValue(string Key)
+        {
+            byte[] valueArray;
+            string valueString;
+            HttpContext.Session.TryGetValue(Key, out valueArray);
+
+            if (valueArray != null)
+                valueString = Util.ByteArrayToString(valueArray);
+            else
+                valueString = string.Empty;
+
+            return valueString;
         }
     }
 }

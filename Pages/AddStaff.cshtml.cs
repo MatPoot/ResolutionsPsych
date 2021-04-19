@@ -31,10 +31,12 @@ namespace ResolutionsPsych.Pages
 
         public void OnGet()
         {
+            //System.Diagnostics.Debug.WriteLine("AddStaff OnGet()");
         }
 
         public IActionResult OnPost()
         {
+            System.Diagnostics.Debug.WriteLine("OnPost()");
 
             if (ModelState.IsValid)
             {
