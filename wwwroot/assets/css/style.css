@@ -303,6 +303,8 @@ header {
     box-shadow: 0 2px 3px 0 rgba(218, 218, 253, 0.35), 0 0px 3px 0 rgba(206, 206, 238, 0.35); }
 
 /* ===================================== With Medical CSS ================================== */
+
+
 .with-medical {
   padding: 50px;
   background-color: #FFF; }
@@ -377,7 +379,7 @@ header {
       margin-left: 5px;
       color: #FFFFFF; }
 
-/* ===================================== Fooer CSS ================================== */
+/* ===================================== Footer CSS ================================== */
 .footer {
   padding: 50px;
   padding-bottom: 0px;
