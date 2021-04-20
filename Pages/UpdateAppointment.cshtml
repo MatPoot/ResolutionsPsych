@@ -1,4 +1,4 @@
-﻿@page 
+﻿@page
 @model ResolutionsPsych.Pages.UpdateAppointmentModel
 @{
 }
@@ -9,8 +9,21 @@
             <label asp-for="AppointmentID"></label>
             <input asp-for="AppointmentID" class="form-control" min="1" />
             <span asp-validation-for="AppointmentID" class="text-danger"></span>
-            <br />
         </div>
+
+        <div class="form-group">
+            <label asp-for="AppointmentDate"></label>
+            <input asp-for="AppointmentDate" class="form-control" min="1" />
+            <span asp-validation-for="AppointmentDate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Notes"></label>
+            <input asp-for="Notes" class="form-control" min="1" />
+            <span asp-validation-for="Notes" class="text-danger"></span>
+        </div>
+
+
 
         <div class="form-group col-md-6">
             <label asp-for="Date"></label>
@@ -34,7 +47,7 @@
         <div class="form-group col-md-4">
             <label asp-for="SelectedClientID">Select the Client</label>
             <select id="ddlClient" asp-for="SelectedClientID" asp-items="@Model.SelectClientList" class="form-control"></select>
-             <span asp-validation-for="FirstName" class="text-danger"></span>
+            <span asp-validation-for="FirstName" class="text-danger"></span>
         </div>
 
         <div class="form-group col-md-4">

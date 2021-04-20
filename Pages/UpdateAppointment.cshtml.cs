@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ResolutionsPsych.Classes;
+using Microsoft.AspNetCore.Http;
 
 namespace ResolutionsPsych.Pages
 {
@@ -25,7 +26,17 @@ namespace ResolutionsPsych.Pages
         public int AppointmentID { get; set; }
 
         [BindProperty]
+        public DateTime AppointmentDate { get; set; }
+
+        [BindProperty]
+        public int ClientID { get; set; }
+
+        [BindProperty]
+        public int CounsellorID { get; set; }
+
+        [BindProperty]
         public string Notes { get; set; }
+
         [BindProperty]
         public int SelectedID { get; set; }
         [BindProperty]
@@ -50,18 +61,25 @@ namespace ResolutionsPsych.Pages
             if (username == null || username == string.Empty)
                 return new RedirectToPageResult("Index");
 
-            PopulateFields();
+            int appointmentID = int.Parse(HttpContext.Session.GetString("UpdateAppointmentID"));
+
+            Message = $"Updating appointment {appointmentID}";
+            ResolutionsSystem rs = new ResolutionsSystem();
+            Classes.Appointment app = rs.GetAppointment(appointmentID);
+
+            System.Diagnostics.Debug.WriteLine($"Updated appointment: {(int)AppointmentID}");
+            PopulateFields(app);
 
             //counsellors dropdownlist
-            PopulateSelectList();
+            //PopulateSelectList();
 
-            ResolutionsSystem rs = new ResolutionsSystem();
-            ListOfCounsellors = rs.GetCounsellors();
+            
+            //ListOfCounsellors = rs.GetCounsellors();
 
             //client dropdownlist
-            PopulateSelectListForClient();
+            //PopulateSelectListForClient();
 
-            ListOfClient = rs.GetClients();
+            //ListOfClient = rs.GetClients();
 
             return Page();
         }
@@ -80,7 +98,7 @@ namespace ResolutionsPsych.Pages
 
             Classes.Appointment appointment = new Classes.Appointment()
             {
-                AppointmentID = AppointmentID,
+                AppointmentID = (int)AppointmentID,
                 AppointmentDate = appointmentDateTime,
                 ClientID = clientID,
                 CounsellorID = counsellorID,
@@ -194,8 +212,11 @@ namespace ResolutionsPsych.Pages
             return timeString;
         }
 
-        private void PopulateFields()
+        private void PopulateFields(Classes.Appointment Appointment)
         {
+            AppointmentID = Appointment.AppointmentID;
+            AppointmentDate = Appointment.AppointmentDate;
+            Notes = Appointment.Notes;
             Date = DateTime.Now;
             Time = new TimeSpan(8, 0, 0);
            

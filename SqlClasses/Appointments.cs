@@ -183,6 +183,47 @@ namespace ResolutionsPsych.SqlClasses
             return code;
         }
 
+        public Classes.Appointment GetAppointment(int AppointmentID)
+        {
+            SqlConnection connection = new SqlConnection();
+            connection.ConnectionString = Util.GetConnectionString();
+            connection.Open();
+
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "GetAppointment";
+
+            SqlParameter parameter = new SqlParameter
+            {
+                ParameterName = "@AppointmentID",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Input,
+                SqlValue = AppointmentID
+            };
+            command.Parameters.Add(parameter);
+
+            Classes.Appointment appointment = new Classes.Appointment();
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            reader.Read();
+
+            if (reader.HasRows)
+            {
+                appointment = new Classes.Appointment()
+                {
+                    AppointmentID = int.Parse(reader["AppointmentID"].ToString()),
+                    AppointmentDate = DateTime.Parse(reader["AppointmentDate"].ToString()),
+                    ClientID = int.Parse(reader["ClientID"].ToString()),
+                    CounsellorID = int.Parse(reader["CounsellorID"].ToString()),
+                    Notes = reader["Notes"].ToString(),
+                };
+            }
+
+            return appointment;
+        }
+
         public List<Classes.Appointment> GetAppointments()
         {
             SqlConnection connection = new SqlConnection();
@@ -255,5 +296,7 @@ namespace ResolutionsPsych.SqlClasses
 
             return appointments;
         }
+
+        
     }
 }

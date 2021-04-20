@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ResolutionsPsych.Classes;
+using Microsoft.AspNetCore.Http;
 
 namespace ResolutionsPsych.Pages
 {
@@ -24,6 +25,15 @@ namespace ResolutionsPsych.Pages
             ListOfAppointments = rs.GetAppointments();
 
             return Page();
+        }
+
+        public IActionResult OnPostUpdate(int AppointmentID)
+        {
+            System.Diagnostics.Debug.WriteLine($"Updating AppointmentID: {AppointmentID}");
+
+            HttpContext.Session.SetString("UpdateAppointmentID", AppointmentID.ToString());
+
+            return new RedirectToPageResult("/UpdateAppointment");
         }
 
         private string GetSessionValue(string Key)

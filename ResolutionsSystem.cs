@@ -30,6 +30,13 @@ namespace ResolutionsPsych
             return code;
         }
 
+        public Classes.Appointment GetAppointment(int AppointmentID)
+        {
+            SqlClasses.Appointments appHelper = new SqlClasses.Appointments();
+            Classes.Appointment appointment = appHelper.GetAppointment(AppointmentID);
+            return appointment;
+        }
+
         public List<Classes.Appointment> GetAppointments()
         {
             SqlClasses.Appointments appHelper = new SqlClasses.Appointments();

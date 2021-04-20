@@ -12,6 +12,7 @@
 --CreateAppointment
 --UpdateAppointment
 --DeleteAppointment
+--GetAppointment
 --GetAppointments
 --GetAppointmentsByClient
 
@@ -51,6 +52,12 @@ IF EXISTS(
 	WHERE NAME = 'DeleteAppointment'
 )
 DROP PROCEDURE DeleteAppointment
+
+IF EXISTS(
+	SELECT * FROM sys.objects
+	WHERE NAME = 'GetAppointment'
+)
+DROP PROCEDURE GetAppointment
 
 IF EXISTS(
 	SELECT * FROM sys.objects
@@ -229,6 +236,15 @@ AS
 		SET @ReturnCode = 0
 
 	RETURN @ReturnCode
+GO
+
+CREATE PROCEDURE GetAppointment
+@AppointmentID INT = NULL
+AS
+	IF @AppointmentID IS NULL
+		RAISERROR('GetAppointment - AppointmentID is null', 16, 1)
+
+	SELECT * FROM Appointments WHERE AppointmentID = @AppointmentID
 GO
 
 CREATE PROCEDURE GetAppointments

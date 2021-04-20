@@ -24,6 +24,12 @@
             <td>@Html.Raw(i.CounsellorID)</td>
             <td>@Html.Raw(i.Notes)</td>
             <td><a class="btn btn-danger" href="DeleteAppointment/@i.AppointmentID">Delete</a></td>
+            <td>
+                <form method="post">
+                    <input value="@Html.Raw(i.AppointmentID)" type="hidden" name="AppointmentID"/>
+                    <input type="submit" asp-page-handler="Update" value="Update" class="btn btn-secondary"/>
+                </form>
+            </td>
         </tr>
         }
 
