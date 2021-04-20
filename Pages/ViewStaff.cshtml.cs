@@ -14,10 +14,6 @@ namespace ResolutionsPsych.Pages.Staff
     {
         public List<Login> StaffList { get; set; }
         public string StaffToModify { get; set; }
-
-        public string SelectedUsername { get; set; }
-
-        public string NewPassword { get; set; }
         public IActionResult OnGet()
         {
 
@@ -33,19 +29,10 @@ namespace ResolutionsPsych.Pages.Staff
 
             return Page();
         }
-        public void OnPost()
+        public IActionResult OnPost()
         {
-            //HttpContext.Session.Set("ToModifyStaffID", Util.StringToByteArray(StaffToModify));
-            //return new RedirectToPageResult("UpdateStaff");
-        }
-
-        public void OnPostUpdate(string Username, string Password)
-        {
-            System.Diagnostics.Debug.WriteLine($"Selected username: {Username}");
-            System.Diagnostics.Debug.WriteLine($"New password: {Password}");
-
-            ResolutionsSystem rs = new ResolutionsSystem();
-            //do sql update here
+            HttpContext.Session.Set("ToModifyStaffID", Util.StringToByteArray(StaffToModify));
+            return new RedirectToPageResult("UpdateStaff");
         }
     }
 }

@@ -5,13 +5,6 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
 
 
-
-<form method="post">
-    <input type="text" id="SelectedUsername" asp-for="SelectedUsername" name="Username"/>
-    <input type="hidden" id="UpdatePassword"  asp-for="NewPassword" name="Password"/>
-    <input type="submit" id="btnUpdate" asp-page-handler="Update" value="Update Staff" />
-</form>
-
 <table id="table_id" class="display">
     <thead>
         <tr>
@@ -40,17 +33,6 @@
                         <button asp-page-handler="Delete" class="btn btn-danger"> Delete </button>
 
                     </form>
-
-                    <!--
-                        <form method="post">
-                        <input value="@Html.Raw(i.Username)" asp-for="@Model.StaffToModify" type="hidden" name="Username" />
-                        <button asp-page-handler="Update" class="btn btn-secondary"> Update </button>
-
-                        </form>
-                    -->
-
-                    <input type="button"  value = "Update" onClick="updateStaff('@Html.Raw(i.Username)')" />
-                
                 </td>
 
             </tr>
@@ -68,14 +50,5 @@
         $(document).ready(function () {
             $('#table_id').DataTable();
         });
-
-        function updateStaff(username) {
-            console.log("Clicked username: " + username);
-            $("#SelectedUsername").val(username);
-
-            //reveal hidden password field and button
-            $("#UpdatePassword").attr("type", "password");
-            $("#btnUpdate").attr("type", "submit");
-        }
     </script>
 }
