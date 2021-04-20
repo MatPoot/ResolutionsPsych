@@ -13,11 +13,11 @@ namespace ResolutionsPsych.Pages
 {
     public class UpdateAppointmentModel : PageModel
     {
-        [BindProperty, DataType(DataType.Date), Required(ErrorMessage = "Date is required")]
-        public DateTime Date { get; set; }
+        //[BindProperty, DataType(DataType.Date), Required(ErrorMessage = "Date is required")]
+        //public DateTime Date { get; set; }
 
-        [BindProperty, DataType(DataType.Time), Required(ErrorMessage = "Time is required")]
-        public TimeSpan Time { get; set; }
+        //[BindProperty, DataType(DataType.Time), Required(ErrorMessage = "Time is required")]
+        //public TimeSpan Time { get; set; }
 
         [BindProperty]
         public string TimeSelected { get; set; }
@@ -32,27 +32,30 @@ namespace ResolutionsPsych.Pages
         public int ClientID { get; set; }
 
         [BindProperty]
+        public string ClientFullName { get; set; }
+
+        [BindProperty]
         public int CounsellorID { get; set; }
 
         [BindProperty]
         public string Notes { get; set; }
 
-        [BindProperty]
-        public int SelectedID { get; set; }
-        [BindProperty]
-        public int SelectedClientID { get; set; }
+        //[BindProperty]
+        //public int SelectedID { get; set; }
+        //[BindProperty]
+        //public int SelectedClientID { get; set; }
         [BindProperty]
         public string CounsellorName { get; set; }
-        [BindProperty]
-        public string FirstName { get; set; }
-        [BindProperty]
-        public List<SelectListItem> SelectCounsellorList { get; set; }
-        [BindProperty]
-        public List<Counsellor> ListOfCounsellors { get; set; }
-        [BindProperty]
-        public List<SelectListItem> SelectClientList { get; set; }
-        [BindProperty]
-        public List<Client> ListOfClient { get; set; }
+        //[BindProperty]
+        //public string FirstName { get; set; }
+        //[BindProperty]
+        //public List<SelectListItem> SelectCounsellorList { get; set; }
+        //[BindProperty]
+        //public List<Counsellor> ListOfCounsellors { get; set; }
+        //[BindProperty]
+        //public List<SelectListItem> SelectClientList { get; set; }
+        //[BindProperty]
+        //public List<Client> ListOfClients { get; set; }
         public string Message { get; set; }
 
         public IActionResult OnGet()
@@ -63,12 +66,30 @@ namespace ResolutionsPsych.Pages
 
             int appointmentID = int.Parse(HttpContext.Session.GetString("UpdateAppointmentID"));
 
-            Message = $"Updating appointment {appointmentID}";
+            System.Diagnostics.Debug.WriteLine($"UpdateAppointment: Updating appointment: {appointmentID}");
+            
             ResolutionsSystem rs = new ResolutionsSystem();
             Classes.Appointment app = rs.GetAppointment(appointmentID);
+            AppointmentID = app.AppointmentID;
+            AppointmentDate = app.AppointmentDate;
+
+            Classes.Client client = rs.GetClient(app.ClientID);
+            ClientID = (int)client.ClientID;
+            if(client.MiddleName == null)
+                ClientFullName = $"{client.FirstName} {client.LastName}";
+            else
+                ClientFullName = $"{client.FirstName} {client.MiddleName} {client.LastName}";
+
+            Classes.Counsellor counsellor = rs.GetCounsellor(app.CounsellorID);
+            CounsellorID = counsellor.CounsellorID;
+            CounsellorName = counsellor.Name;
+            //Message = $"Updating appointment {appointmentID}\n" +
+            //    $"Date: {app.AppointmentDate}\n" +
+            //    $"Client Name: {clientName} ({client.ClientID})\n" +
+            //    $"Counsellor: {counsellor.Name} ({counsellor.CounsellorID})";
 
             System.Diagnostics.Debug.WriteLine($"Updated appointment: {(int)AppointmentID}");
-            PopulateFields(app);
+            //PopulateFields(app);
 
             //counsellors dropdownlist
             //PopulateSelectList();
@@ -79,7 +100,7 @@ namespace ResolutionsPsych.Pages
             //client dropdownlist
             //PopulateSelectListForClient();
 
-            //ListOfClient = rs.GetClients();
+            //ListOfClients = rs.GetClients();
 
             return Page();
         }
@@ -88,22 +109,23 @@ namespace ResolutionsPsych.Pages
         {
             SqlCode code;
 
-            System.Diagnostics.Debug.WriteLine($"TimeSelected: {TimeSelected}");
-            DateTime appointmentDateTime = Date.Add(Time);
+            //System.Diagnostics.Debug.WriteLine($"TimeSelected: {TimeSelected}");
+            //DateTime appointmentDateTime = Date.Add(Time);
 
-            int counsellorID;
-            int clientID;
-            counsellorID = SelectedID;
-            clientID = SelectedClientID;
+            //counsellorID = SelectedID;
+            //clientID = SelectedClientID;
 
             Classes.Appointment appointment = new Classes.Appointment()
             {
                 AppointmentID = (int)AppointmentID,
-                AppointmentDate = appointmentDateTime,
-                ClientID = clientID,
-                CounsellorID = counsellorID,
+                AppointmentDate = AppointmentDate,
+                ClientID = ClientID,
+                CounsellorID = CounsellorID,
                 Notes = Notes
             };
+
+            System.Diagnostics.Debug.WriteLine("Displaying updated appointment");
+            appointment.Print();
 
             ResolutionsSystem rs = new ResolutionsSystem();
             code = rs.UpdateAppointment(appointment);
@@ -120,12 +142,13 @@ namespace ResolutionsPsych.Pages
 
         #region Helper Methods
 
+        /*
         private void PopulateSelectList()
         {
             ResolutionsSystem rs = new ResolutionsSystem();
-            ListOfCounsellors = rs.GetCounsellors();
+            //ListOfCounsellors = rs.GetCounsellors();
 
-            SelectCounsellorList = new List<SelectListItem>();
+            //SelectCounsellorList = new List<SelectListItem>();
 
             foreach (Counsellor p in ListOfCounsellors)
             {
@@ -140,11 +163,11 @@ namespace ResolutionsPsych.Pages
         private void PopulateSelectListForClient()
         {
             ResolutionsSystem rs = new ResolutionsSystem();
-            ListOfClient = rs.GetClients();
+            ListOfClients = rs.GetClients();
 
             SelectClientList = new List<SelectListItem>();
 
-            foreach (Client p in ListOfClient)
+            foreach (Client p in ListOfClients)
             {
                 SelectListItem item = new SelectListItem()
                 {
@@ -179,6 +202,7 @@ namespace ResolutionsPsych.Pages
 
             return selectListTimes;
         }
+        */
 
         private string TimeSpanToString(TimeSpan time)
         {
@@ -217,8 +241,8 @@ namespace ResolutionsPsych.Pages
             AppointmentID = Appointment.AppointmentID;
             AppointmentDate = Appointment.AppointmentDate;
             Notes = Appointment.Notes;
-            Date = DateTime.Now;
-            Time = new TimeSpan(8, 0, 0);
+            //Date = DateTime.Now;
+            //Time = new TimeSpan(8, 0, 0);
            
         }
 

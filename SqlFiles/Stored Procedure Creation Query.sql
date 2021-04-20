@@ -26,6 +26,7 @@
 --CreateCounsellor
 --UpdateCounsellor
 --DeleteCounsellor
+--GetCounsellor
 --GetCounsellors
 
 --CreateLogin
@@ -124,6 +125,12 @@ IF EXISTS(
 	WHERE NAME = 'DeleteCounsellor'
 )
 DROP PROCEDURE DeleteCounsellor
+
+IF EXISTS(
+	SELECT * FROM sys.objects
+	WHERE NAME = 'GetCounsellor'
+)
+DROP PROCEDURE GetCounsellor
 
 IF EXISTS(
 	SELECT * FROM sys.objects
@@ -436,6 +443,15 @@ AS
 		SET @ReturnCode = 0
 
 	RETURN @ReturnCode
+GO
+
+CREATE PROCEDURE GetCounsellor
+@CounsellorID INT = NULL
+AS
+	IF @CounsellorID IS NULL
+		RAISERROR('GetCounsellor - CounsellorID is null', 16, 1)
+
+	SELECT * FROM Counsellors WHERE CounsellorID = @CounsellorID
 GO
 
 CREATE PROCEDURE GetCounsellors

@@ -113,6 +113,13 @@ namespace ResolutionsPsych
             return code;
         }
 
+        public Classes.Counsellor GetCounsellor(int CounsellorID)
+        {
+            SqlClasses.Counsellors counsellorHelper = new SqlClasses.Counsellors();
+            Classes.Counsellor counsellor = counsellorHelper.GetCounsellor(CounsellorID);
+            return counsellor;
+        }
+
         public List<Classes.Counsellor> GetCounsellors()
         {
             SqlClasses.Counsellors counsellorHelper = new SqlClasses.Counsellors();

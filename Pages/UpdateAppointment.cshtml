@@ -3,11 +3,22 @@
 @{
 }
 <label>@Model.Message</label>
+<br />
+
+<label>AppointmentID: @Model.AppointmentID</label><br />
+<label>AppointmentDate: @Model.AppointmentDate</label><br />
+<label>Client: @Model.ClientFullName (@Model.ClientID)</label><br />
+<label>Counsellor: @Model.CounsellorName (@Model.CounsellorID)</label>
+
+
 <form method="post">
+
+
+    <!--
     <div class="form-row">
         <div class="form-group col-md-6">
             <label asp-for="AppointmentID"></label>
-            <input asp-for="AppointmentID" class="form-control" min="1" />
+            <input asp-for="AppointmentID" class="form-control" min="1" readonly />
             <span asp-validation-for="AppointmentID" class="text-danger"></span>
         </div>
 
@@ -39,28 +50,31 @@
 
 
         @*<div class="form-group col-md-4">
-            <label asp-for="ClientID"></label>
-            <input asp-for="ClientID" class="form-control" />
-            <span asp-validation-for="ClientID" class="text-danger"></span>
-        </div>*@
+                <label asp-for="ClientID"></label>
+                <input asp-for="ClientID" class="form-control" />
+                <span asp-validation-for="ClientID" class="text-danger"></span>
+            </div>*@
 
         <div class="form-group col-md-4">
             <label asp-for="SelectedClientID">Select the Client</label>
-            <select id="ddlClient" asp-for="SelectedClientID" asp-items="@Model.SelectClientList" class="form-control"></select>
+            <select id="ddlClient" asp-for="SelectedClientID" asp-items="Model.SelectClientList" class="form-control"></select>
             <span asp-validation-for="FirstName" class="text-danger"></span>
         </div>
 
         <div class="form-group col-md-4">
             <label asp-for="SelectedID">Select A Counsellor</label>
-            <select id="ddlCounsellor" asp-for="SelectedID" asp-items="@Model.SelectCounsellorList" class="form-control"></select>
+            <select id="ddlCounsellor" asp-for="SelectedID" asp-items="Model.SelectCounsellorList" class="form-control"></select>
             <span asp-validation-for="CounsellorName" class="text-danger"></span>
         </div>
-        <div class="form-group col-md-4">
-            <label asp-for="Notes"></label>
-            <input asp-for="Notes" class="form-control" />
-        </div>
+        -->
+    <input type="hidden" asp-for="AppointmentID" />
+    <input type="hidden" asp-for="AppointmentDate" />
+    <input type="hidden" asp-for="ClientID" />
+    <input type="hidden" asp-for="CounsellorID" />
+    <div class="form-group">
+        <label asp-for="Notes"></label>
+        <input asp-for="Notes" class="form-control" />
     </div>
 
-        <input type="submit" value="Update Appointment" />
-    @Model.Message
+    <input type="submit" value="Update Appointment" />
 </form>

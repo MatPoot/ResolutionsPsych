@@ -14,7 +14,14 @@ namespace ResolutionsPsych.Classes
         public int CounsellorID;
         public string Notes;
         
-
+        public void Print()
+        {
+            System.Diagnostics.Debug.WriteLine($"AppointmentID: {AppointmentID}");
+            System.Diagnostics.Debug.WriteLine($"AppointmentDate: {AppointmentDate}");
+            System.Diagnostics.Debug.WriteLine($"ClientID: {ClientID}");
+            System.Diagnostics.Debug.WriteLine($"CounsellorID: {CounsellorID}");
+            System.Diagnostics.Debug.WriteLine($"Notes: {Notes}");
+        }
 
     }
 }

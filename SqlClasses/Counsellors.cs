@@ -129,6 +129,43 @@ namespace ResolutionsPsych.SqlClasses
             return code;
         }
 
+        public Classes.Counsellor GetCounsellor(int CounsellorID)
+        {
+            SqlConnection connection = new SqlConnection();
+            connection.ConnectionString = Util.GetConnectionString();
+            connection.Open();
+
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "GetCounsellor";
+
+            SqlParameter parameter = new SqlParameter
+            {
+                ParameterName = "@CounsellorID",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Input,
+                SqlValue = CounsellorID
+            };
+            command.Parameters.Add(parameter);
+
+            Classes.Counsellor counsellor = new Classes.Counsellor();
+
+            SqlDataReader reader = command.ExecuteReader();
+            reader.Read();
+
+            if (reader.HasRows)
+            {
+                counsellor = new Classes.Counsellor()
+                {
+                    CounsellorID = int.Parse(reader["CounsellorID"].ToString()),
+                    Name = reader["Name"].ToString()
+                };
+            }
+
+            return counsellor;
+        }
+
         public List<Classes.Counsellor> GetCounsellors()
         {
             SqlConnection connection = new SqlConnection();
